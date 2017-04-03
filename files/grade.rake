@@ -1,7 +1,7 @@
 if RUBY_PLATFORM =~ /darwin/
 
   desc "Grade project on OS X"
-  task :grade do # if needed in the future, add => :environment
+  task grade: ["db:migrate"] do # if needed in the future, add => :environment
 
     # Not quite right: options work, but barely
     options = {}
