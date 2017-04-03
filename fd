@@ -1,0 +1,4 @@
+--template=https://raw.githubusercontent.com/firstdraft/appdev_template/master/template.rb
+--skip-spring
+--skip-turbolinks
+--skip-test-unit
