@@ -76,7 +76,7 @@ if RUBY_PLATFORM =~ /darwin/
     rspec_output_string_json = `bundle exec rspec --order default --format json`
     rspec_output_json = JSON.parse(rspec_output_string_json)
     puts "- #{rspec_output_json["summary_line"]}".result_format
-    puts "- For detailed results: run 'rake grade --verbose' or 'rake grade -v'" if !options[:verbose]
+    puts "- For detailed results: run 'rails grade --verbose' or 'rails grade -v'" if !options[:verbose]
 
     puts
     puts "#{header_outline_counter}. SUBMIT RESULTS".header_format
@@ -115,7 +115,7 @@ if RUBY_PLATFORM =~ /darwin/
       if options[:verbose]
         abort("#{network_error_msg_base}  \n\nTechnical error message that may or may not be helpful: #{e.inspect}\n".error_format)
       else
-        abort("#{network_error_msg_base}  For a technical error message that may or may not be helpful, run 'rake grade --verbose' or 'rake grade -v'.\n".error_format)
+        abort("#{network_error_msg_base}  For a technical error message that may or may not be helpful, run 'rails grade --verbose' or 'rails grade -v'.\n".error_format)
       end
     end
     if res.kind_of? Net::HTTPCreated
@@ -209,7 +209,7 @@ if RUBY_PLATFORM =~ /darwin/
 
     def no_colors;      self.gsub /\e\[\d+m/, ""  end
 
-    # Specific formatting for 'rake grade'
+    # Specific formatting for 'rails grade'
     def header_format;  self.underline            end
     def result_format;  self.bold                 end
     def link_format;    self                      end
@@ -297,7 +297,7 @@ else
     rspec_output_string_json = `bundle exec rspec --order default --format json`
     rspec_output_json = JSON.parse(rspec_output_string_json)
     puts "- #{rspec_output_json["summary_line"]}"#.result_format
-    puts "- For detailed results: run 'rake grade --verbose' or 'rake grade -v'" if !options[:verbose]
+    puts "- For detailed results: run 'rails grade --verbose' or 'rails grade -v'" if !options[:verbose]
 
     puts
     puts "#{header_outline_counter}. SUBMIT RESULTS"#.header_format
@@ -345,7 +345,7 @@ else
       if options[:verbose]
         abort("#{network_error_msg_base}  \n\nTechnical error message that may or may not be helpful: #{e.inspect}\n") #.error_format
       else
-        abort("#{network_error_msg_base}  For a technical error message that may or may not be helpful, run 'rake grade --verbose' or 'rake grade -v'.\n") #.error_format
+        abort("#{network_error_msg_base}  For a technical error message that may or may not be helpful, run 'rails grade --verbose' or 'rails grade -v'.\n") #.error_format
       end
     end
     if res.kind_of? Net::HTTPCreated
@@ -439,7 +439,7 @@ else
 
   #   def no_colors;      self.gsub /\e\[\d+m/, ""  end
 
-  #   # Specific formatting for 'rake grade'
+  #   # Specific formatting for 'rails grade'
   #   def header_format;  self.underline            end
   #   def result_format;  self.bold                 end
   #   def link_format;    self                      end
