@@ -1,3 +1,6 @@
+# Helper methods to copy in files
+# ===============================
+
 ENV = :prod
 # ENV = :dev
 
@@ -27,41 +30,8 @@ def render_file(filename)
   end
 end
 
-# Add a rails engine to provide /console in all apps
-# Add a rails engine to provide /git in all apps
-# Add a rails engine to provide /rails in all apps
-
-# Create branch for -target
-# Create deploy script to push target branch to heroku
-
-# Create/modify bin/setup
-# file("setup.sh") do
-#   <<-SCRIPT.gsub(/^\s+/, "")
-#     #!/bin/bash
-#
-#     echo "Making sure you have all the gems this app depends upon installed..."
-#     bundle install --without production
-#
-#     echo "Building the database..."
-#     rake db:migrate
-#
-#     echo "Populating the database with dummy data.."
-#     rake db:seed
-#   SCRIPT
-# end
-#
-# file("setup.bat") do
-#   <<-SCRIPT.gsub(/^\s+/, "")
-#     echo "Making sure you have all the gems this app depends upon installed..."
-#     bundle install --without production
-#
-#     echo "Building the database..."
-#     rake db:migrate
-#
-#     echo "Populating the database with dummy data.."
-#     rake db:seed
-#   SCRIPT
-# end
+# Add standard gems
+# =================
 
 gem_group :development, :test do
   gem "dotenv-rails"
@@ -84,9 +54,7 @@ gem_group :test do
 end
 
 after_bundle do
-  environment \
-    "config.action_mailer.default_url_options = { host: \"localhost\", port: 3000 }",
-    env: "development"
+  # Prevent test noise in generators
 
   application \
     <<-RB.gsub(/^      /, "")
@@ -96,8 +64,18 @@ after_bundle do
           end
     RB
 
+  # Configure mailer in development
+
+  environment \
+    "config.action_mailer.default_url_options = { host: \"localhost\", port: 3000 }",
+    env: "development"
+
+  # Better default favicon
+
   remove_file "public/favicon.ico"
   file "public/favicon.ico", render_file("favicon.ico")
+
+  # Better default README
 
   remove_file "README.md"
   file "README.md", render_file("README.md")
@@ -109,6 +87,7 @@ after_bundle do
     MD
   end
 
+  # Set up dotenv
   file ".env.development", render_file(".env.development")
 
   append_file ".gitignore" do
@@ -118,6 +97,8 @@ after_bundle do
       /.env*
     EOF
   end
+
+  # Set up rspec and capybara
 
   generate "rspec:install"
 
@@ -202,6 +183,8 @@ after_bundle do
 
   file "spec/factories.rb"
 
+  # Example spec
+
   file "spec/features/1_home_page_spec.rb", <<-RB.gsub(/^    /, "")
     require "rails_helper"
 
@@ -214,9 +197,15 @@ after_bundle do
     end
   RB
 
+  # Add rails grade task
+
   file "lib/tasks/grade.rake", render_file("grade.rake")
 
+  # Add firstdraft configuration
+
   file ".firstdraft_project.yml", render_file(".firstdraft_project.yml")
+
+  # Turn off CSRF protection
 
   gsub_file "app/controllers/application_controller.rb",
             /protect_from_forgery with: :exception/, "# protect_from_forgery with: :exception"
@@ -225,3 +214,42 @@ after_bundle do
   git add: "-A"
   git commit: "-m \"rails new\""
 end
+
+# TODO List
+# =========
+
+# Add a rails engine to provide /console in all apps
+# Add a rails engine to provide /git in all apps
+# Add a rails engine to provide /rails in all apps
+
+# Create branch for -target
+# Create deploy script to push target branch to heroku
+
+# Create/modify bin/setup
+# file("setup.sh") do
+#   <<-SCRIPT.gsub(/^\s+/, "")
+#     #!/bin/bash
+#
+#     echo "Making sure you have all the gems this app depends upon installed..."
+#     bundle install --without production
+#
+#     echo "Building the database..."
+#     rake db:migrate
+#
+#     echo "Populating the database with dummy data.."
+#     rake db:seed
+#   SCRIPT
+# end
+#
+# file("setup.bat") do
+#   <<-SCRIPT.gsub(/^\s+/, "")
+#     echo "Making sure you have all the gems this app depends upon installed..."
+#     bundle install --without production
+#
+#     echo "Building the database..."
+#     rake db:migrate
+#
+#     echo "Populating the database with dummy data.."
+#     rake db:seed
+#   SCRIPT
+# end
