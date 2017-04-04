@@ -53,6 +53,9 @@ gem_group :test do
   gem "webmock"
 end
 
+gem "bootstrap-sass", "~> 3.3.6"
+gem "font-awesome-sass", "~> 4.7.0"
+
 after_bundle do
   # Prevent test noise in generators
 
@@ -86,6 +89,11 @@ after_bundle do
 
     MD
   end
+
+  # Set up Bootstrap and Font Awesome
+
+  remove_file "app/assets/stylesheets/application.css"
+  file "app/assets/stylesheets/application.scss", render_file("application.scss")
 
   # Set up dotenv
   file ".env.development", render_file(".env.development")
