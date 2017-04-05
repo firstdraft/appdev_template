@@ -56,6 +56,12 @@ end
 gem "bootstrap-sass", "~> 3.3.6"
 gem "font-awesome-sass", "~> 4.7.0"
 
+# Use WEBrick
+
+gsub_file "Gemfile",
+/gem 'puma'/,
+"# gem 'puma'"
+
 after_bundle do
   # Prevent test noise in generators
 
@@ -216,7 +222,8 @@ after_bundle do
   # Turn off CSRF protection
 
   gsub_file "app/controllers/application_controller.rb",
-            /protect_from_forgery with: :exception/, "# protect_from_forgery with: :exception"
+            /protect_from_forgery with: :exception/,
+            "# protect_from_forgery with: :exception"
 
   git :init
   git add: "-A"
