@@ -104,6 +104,17 @@ after_bundle do
   bootstrap_variables_url = "https://raw.githubusercontent.com/twbs/bootstrap-sass/master/templates/project/_bootstrap-variables.sass"
   file "app/assets/stylesheets/_bootstrap-variables.sass", open(bootstrap_variables_url).read
 
+  inside "app" do
+    inside "assets" do
+      inside "javascripts" do
+        inject_into_file "application.js",
+                         after: "//= require jquery\n" do
+          "//= require bootstrap-sprockets\n"
+        end
+      end
+    end
+  end
+
   # Set up dotenv
   file ".env.development", render_file(".env.development")
 
