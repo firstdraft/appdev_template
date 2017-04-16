@@ -179,14 +179,14 @@ after_bundle do
               :pending_count => summary.pending_count,
               :total_points => total_points,
               :earned_points => earned_points,
-              :score => earned_points.to_f / total_points
+              :score => (earned_points.to_f / total_points).round(2)
             }
 
             @output_hash[:summary_line] = [
               "\#{summary.example_count} tests",
               "\#{summary.failure_count} failures",
               "\#{earned_points}/\#{total_points} points",
-              "\#{(earned_points.to_f / total_points) * 100}%",
+              "\#{@output_hash[:summary][:score]}%",
             ].join(", ")
           end
 
