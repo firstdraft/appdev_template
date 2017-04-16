@@ -59,8 +59,8 @@ gem "font-awesome-sass", "~> 4.7.0"
 # Use WEBrick
 
 gsub_file "Gemfile",
-/gem 'puma'/,
-"# gem 'puma'"
+  /gem 'puma'/,
+  "# gem 'puma'"
 
 after_bundle do
   # Prevent test noise in generators
@@ -70,6 +70,8 @@ after_bundle do
       config.generators do |g|
             g.test_framework nil
             g.factory_girl false
+            g.assets false
+            g.helper false
           end
     RB
 
