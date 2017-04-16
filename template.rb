@@ -70,8 +70,7 @@ after_bundle do
       config.generators do |g|
             g.test_framework nil
             g.factory_girl false
-            g.assets false
-            g.helper false
+            g.scaffold_stylesheet false
           end
     RB
 
@@ -84,12 +83,14 @@ after_bundle do
   # Better default favicon
 
   remove_file "public/favicon.ico"
-  file "public/favicon.ico", render_file("favicon.ico")
+  file "public/favicon.ico",
+    render_file("favicon.ico")
 
   # Better default README
 
   remove_file "README.md"
-  file "README.md", render_file("README.md")
+  file "README.md",
+    render_file("README.md")
 
   prepend_file "README.md" do
     <<-MD.gsub(/^      /, "")
@@ -101,16 +102,19 @@ after_bundle do
   # Set up Bootstrap and Font Awesome
 
   remove_file "app/assets/stylesheets/application.css"
-  file "app/assets/stylesheets/application.scss", render_file("application.scss")
+  file "app/assets/stylesheets/application.scss",
+    render_file("application.scss")
 
   bootstrap_variables_url = "https://raw.githubusercontent.com/twbs/bootstrap-sass/master/templates/project/_bootstrap-variables.sass"
-  file "app/assets/stylesheets/_bootstrap-variables.sass", open(bootstrap_variables_url).read
+  file "app/assets/stylesheets/_bootstrap-variables.sass",
+    open(bootstrap_variables_url).read
 
   inside "app" do
     inside "assets" do
       inside "javascripts" do
         inject_into_file "application.js",
-                         after: "//= require jquery\n" do
+          after: "//= require jquery\n" do
+
           "//= require bootstrap-sprockets\n"
         end
       end
@@ -153,14 +157,6 @@ after_bundle do
       <<-RUBY.gsub(/^      /, "")
         config.include FactoryGirl::Syntax::Methods
 
-        config.backtrace_exclusion_patterns = [
-          /\\/lib\\d*\\/ruby\\//,
-          /bin\\//,
-          /gems/,
-          /spec\\/spec_helper\\.rb/,
-          /lib\\/rspec\\/(core|expectations|matchers|mocks)/
-        ]
-
         class RSpec::Core::Formatters::JsonFormatter
           def dump_summary(summary)
             total_points = summary.
@@ -175,13 +171,13 @@ after_bundle do
             sum
 
             @output_hash[:summary] = {
-              :duration => summary.duration,
-              :example_count => summary.example_count,
-              :failure_count => summary.failure_count,
-              :pending_count => summary.pending_count,
-              :total_points => total_points,
-              :earned_points => earned_points,
-              :score => (earned_points.to_f / total_points).round(2)
+              duration: summary.duration,
+              example_count: summary.example_count,
+              failure_count: summary.failure_count,
+              pending_count: summary.pending_count,
+              total_points: total_points,
+              earned_points: earned_points,
+              score: (earned_points.to_f / total_points).round(2)
             }
 
             @output_hash[:summary_line] = [
@@ -196,14 +192,14 @@ after_bundle do
 
           def format_example(example)
             {
-              :description => example.description,
-              :full_description => example.full_description,
-              :hint => example.metadata[:hint],
-              :status => example.execution_result.status.to_s,
-              :points => example.metadata[:points],
-              :file_path => example.metadata[:file_path],
-              :line_number  => example.metadata[:line_number],
-              :run_time => example.execution_result.run_time,
+              description: example.description,
+              full_description: example.full_description,
+              hint: example.metadata[:hint],
+              status: example.execution_result.status.to_s,
+              points: example.metadata[:points],
+              file_path: example.metadata[:file_path],
+              line_number:  example.metadata[:line_number],
+              run_time: example.execution_result.run_time,
             }
           end
         end
@@ -215,31 +211,24 @@ after_bundle do
 
   # Example spec
 
-  file "spec/features/1_home_page_spec.rb", <<-RB.gsub(/^    /, "")
-    require "rails_helper"
-
-    feature "The home page" do
-      it "displays a greeting", points: 1, hint: "Should say hi" do
-        visit "/"
-
-        expect(page).to have_selector("p", text: "hi")
-      end
-    end
-  RB
+  file "spec/features/1_home_page_spec.rb",
+    render_file("1_home_page_spec.rb")
 
   # Add rails grade task
 
-  file "lib/tasks/grade.rake", render_file("grade.rake")
+  file "lib/tasks/grade.rake",
+    render_file("grade.rake")
 
   # Add firstdraft configuration
 
-  file ".firstdraft_project.yml", render_file(".firstdraft_project.yml")
+  file ".firstdraft_project.yml",
+    render_file(".firstdraft_project.yml")
 
   # Turn off CSRF protection
 
   gsub_file "app/controllers/application_controller.rb",
-            /protect_from_forgery with: :exception/,
-            "# protect_from_forgery with: :exception"
+    /protect_from_forgery with: :exception/,
+    "# protect_from_forgery with: :exception"
 
   git :init
   git add: "-A"
