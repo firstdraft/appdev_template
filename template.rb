@@ -214,6 +214,16 @@ after_bundle do
   file "spec/features/1_home_page_spec.rb",
     render_file("1_home_page_spec.rb")
 
+  inside "config" do
+    inside "locales" do
+      inject_into_file "en.yml",
+        after: "en:\n" do
+
+        "  greeting: Say hi\n"
+      end
+    end
+  end
+
   # Add rails grade task
 
   file "lib/tasks/grade.rake",
