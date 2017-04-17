@@ -46,7 +46,7 @@ if RUBY_PLATFORM =~ /darwin/
       personal_access_token = nil
     end
     if !personal_access_token
-      puts "Enter your personal access token"
+      puts "Enter your access token for this project"
       new_personal_access_token = ""
       while new_personal_access_token == "" do
         print "> "
@@ -267,7 +267,7 @@ else
       personal_access_token = nil
     end
     if !personal_access_token
-      puts "Enter your personal access token"
+      puts "Enter your access token for this project"
       new_personal_access_token = ""
       while new_personal_access_token == "" do
         print "> "
