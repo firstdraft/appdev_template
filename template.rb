@@ -229,6 +229,15 @@ after_bundle do
   file "lib/tasks/grade.rake",
     render_file("grade.rake")
 
+  # Add rails spec:update task
+
+  file "lib/tasks/project.rake",
+    render_file("project.rake")
+
+  gsub_file "lib/tasks/project.rake",
+    /app_name/,
+    @app_name
+
   # Add firstdraft configuration
 
   file ".firstdraft_project.yml",
