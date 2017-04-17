@@ -1,6 +1,7 @@
 ## Standard Workflow
 
- 1. Clone this repository down to your computer.
+ 1. Fork to your own account.
+ 1. Clone to your computer.
  1. In the GitHub Desktop app, [create a branch for your work](https://help.github.com/desktop/guides/contributing/creating-a-branch-for-your-work/#creating-a-branch).
  1. Open the entire folder you downloaded in Atom.
  1. Make your first change to the code. (You could modify this `README.md` file by adding your username next to the project in the heading, for example.)
