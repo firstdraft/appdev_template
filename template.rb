@@ -219,7 +219,7 @@ after_bundle do
       inject_into_file "en.yml",
         after: "en:\n" do
 
-        "  greeting: Say hi\n"
+        "  hints:\n    greeting: Say hi\n"
       end
     end
   end
