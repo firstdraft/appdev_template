@@ -115,7 +115,7 @@ after_bundle do
         inject_into_file "application.js",
           after: "//= require jquery\n" do
 
-          "//= require bootstrap-sprockets\n"
+          "//= require bootstrap\n"
         end
       end
     end
@@ -158,7 +158,7 @@ after_bundle do
         config.include FactoryGirl::Syntax::Methods
 
         def h(hint_identifiers)
-          hint_identifiers.split.map { |identifier| I18n.t("hints.#{identifier}") }
+          hint_identifiers.split.map { |identifier| I18n.t("hints.\#{identifier}") }
         end
 
         class RSpec::Core::Formatters::JsonFormatter
