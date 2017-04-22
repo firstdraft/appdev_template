@@ -157,6 +157,10 @@ after_bundle do
       <<-RUBY.gsub(/^      /, "")
         config.include FactoryGirl::Syntax::Methods
 
+        def h(hint_identifiers)
+          hint_identifiers.split.map { |identifier| I18n.t("hints.#{identifier}") }
+        end
+
         class RSpec::Core::Formatters::JsonFormatter
           def dump_summary(summary)
             total_points = summary.
