@@ -35,6 +35,7 @@ end
 
 gem_group :development, :test do
   gem "dotenv-rails"
+  gem "pry-rails"
 end
 
 gem_group :development do
@@ -42,7 +43,6 @@ gem_group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "letter_opener"
-  gem "pry-rails"
   gem "wdm", platforms: [:mingw, :mswin, :x64_mingw]
 end
 
