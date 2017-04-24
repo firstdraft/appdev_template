@@ -53,6 +53,9 @@ gem_group :test do
   gem "webmock"
 end
 
+gem "devise"
+gem "activeadmin", git: "https://github.com/activeadmin/activeadmin"
+
 gem "bootstrap-sass", "~> 3.3.6"
 gem "font-awesome-sass", "~> 4.7.0"
 
@@ -130,6 +133,35 @@ after_bundle do
       # Ignore dotenv files
       /.env*
     EOF
+  end
+
+  # Set up Active Admin
+
+  generate "active_admin:install"
+
+  gsub_file "db/seeds.rb",
+    /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
+    "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
+
+  rails_command "db:migrate"
+  rails_command "db:seed"
+
+  inside "config" do
+    inside "initializers" do
+      inject_into_file "active_admin.rb", after: "ActiveAdmin.setup do |config|\n" do
+        <<-RUBY.gsub(/^        /, "")
+          # If you are using Devise's before_action :authenticate_user!
+          #   in your ApplicationController, then uncomment the following:
+
+          # config.skip_before_filter :authenticate_user!
+
+        RUBY
+      end
+
+      gsub_file "active_admin.rb",
+        "  # config.comments_menu = false\n",
+        "  config.comments_menu = false\n"
+    end
   end
 
   # Set up rspec and capybara
