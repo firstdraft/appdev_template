@@ -124,6 +124,10 @@ after_bundle do
     end
   end
 
+  # Remove //= require_tree .
+
+  gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
+
   # Set up dotenv
   file ".env.development", render_file(".env.development")
 
