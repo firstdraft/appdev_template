@@ -53,8 +53,8 @@ gem_group :test do
   gem "webmock"
 end
 
-gem "devise"
-gem "activeadmin", git: "https://github.com/activeadmin/activeadmin"
+gem "devise", github: "plataformatec/devise"
+gem "activeadmin", github: "activeadmin/activeadmin"
 
 gem "bootstrap-sass", "~> 3.3.6"
 gem "font-awesome-sass", "~> 4.7.0"
@@ -185,8 +185,13 @@ after_bundle do
   end
 
   prepend_file "spec/spec_helper.rb" do
-    "require \"factory_girl_rails\""
+    <<-RUBY.gsub(/^      /, "")
+      require "factory_girl_rails"
+      require_relative "support/increasing_random"
+    RUBY
   end
+
+  file "spec/support/increasing_random.rb", render_file("increasing_random.rb")
 
   inside "spec" do
     inject_into_file "spec_helper.rb", after: "RSpec.configure do |config|\n" do
@@ -247,8 +252,6 @@ after_bundle do
     end
   end
 
-  file "spec/factories.rb"
-
   # Example spec
 
   file "spec/features/1_home_page_spec.rb",
@@ -268,6 +271,11 @@ after_bundle do
 
   file "lib/tasks/grade.rake",
     render_file("grade.rake")
+
+  # Copy hints
+
+  file "config/locales/en.yml",
+    render_file("en.yml")
 
   # Add rails spec:update task
 
