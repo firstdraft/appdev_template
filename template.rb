@@ -142,7 +142,7 @@ after_bundle do
   # Set up Active Admin
 
   # generate "active_admin:install"
-  # 
+  #
   # gsub_file "db/seeds.rb",
   #   /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
   #   "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
@@ -187,7 +187,6 @@ after_bundle do
   prepend_file "spec/spec_helper.rb" do
     <<-RUBY.gsub(/^      /, "")
       require "factory_girl_rails"
-      require_relative "support/increasing_random"
     RUBY
   end
 
