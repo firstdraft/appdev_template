@@ -251,30 +251,16 @@ after_bundle do
     end
   end
 
-  # Example spec
+  # Copy hints
 
-  file "spec/features/1_home_page_spec.rb",
-    render_file("1_home_page_spec.rb")
-
-  inside "config" do
-    inside "locales" do
-      inject_into_file "en.yml",
-        after: "en:\n" do
-
-        "  hints:\n    greeting: Say hi\n"
-      end
-    end
-  end
+  remove_file "config/locales/en.yml"
+  file "config/locales/en.yml",
+    render_file("en.yml")
 
   # Add rails grade task
 
   file "lib/tasks/grade.rake",
     render_file("grade.rake")
-
-  # Copy hints
-
-  file "config/locales/en.yml",
-    render_file("en.yml")
 
   # Add rails spec:update task
 
