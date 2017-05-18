@@ -42,7 +42,9 @@ gem_group :development do
   gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
+  gem "firstdraft_generators"
   gem "letter_opener"
+  gem "meta_request"
   gem "wdm", platforms: [:mingw, :mswin, :x64_mingw]
 end
 
@@ -53,10 +55,10 @@ gem_group :test do
   gem "webmock"
 end
 
-gem "devise", github: "plataformatec/devise"
 gem "activeadmin", github: "activeadmin/activeadmin"
-
-gem "bootstrap-sass", "~> 3.3.6"
+gem "bootstrap", "~> 4.0.0.alpha6"
+gem "devise", github: "plataformatec/devise"
+gem "jquery-rails"
 gem "font-awesome-sass", "~> 4.7.0"
 
 # Use WEBrick
@@ -116,8 +118,9 @@ after_bundle do
     inside "assets" do
       inside "javascripts" do
         insert_into_file "application.js",
-          after: "//= require jquery\n" do
+          after: "//= require rails-ujs\n" do
 
+          "//= require jquery\n"
           "//= require bootstrap\n"
         end
       end
