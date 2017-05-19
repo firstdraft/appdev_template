@@ -39,6 +39,7 @@ gem_group :development, :test do
 end
 
 gem_group :development do
+  gem "annotate"
   gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
@@ -171,6 +172,10 @@ after_bundle do
         "  config.comments_menu = false\n"
     end
   end
+
+  # Install annotate
+
+  generate "annotate:install"
 
   # Set up rspec and capybara
 
