@@ -30,12 +30,17 @@ def render_file(filename)
   end
 end
 
+skip_active_admin = yes?("Skip ActiveAdmin?")
+skip_devise = yes?("Skip Devise?")
+
 # Add standard gems
 # =================
 
 gem_group :development, :test do
   gem "dotenv-rails"
   gem "pry-rails"
+  gem "grade_runner", github: "firstdraft/grade_runner"
+  gem "web_git", github: "firstdraft/web_git"
 end
 
 gem_group :development do
@@ -56,19 +61,28 @@ gem_group :test do
   gem "webmock"
 end
 
-gem "activeadmin", github: "activeadmin/activeadmin"
+gem "activeadmin", github: "activeadmin/activeadmin" unless skip_active_admin
 gem "bootstrap", "~> 4.0.0.alpha6"
-gem "devise", github: "plataformatec/devise"
+gem "devise", github: "plataformatec/devise" unless skip_devise
 gem "jquery-rails"
 gem "font-awesome-sass", "~> 4.7.0"
 
 # Use WEBrick
 
-gsub_file "Gemfile",
-  /gem 'puma'/,
-  "# gem 'puma'"
+# gsub_file "Gemfile",
+#   /gem 'puma'/,
+#   "# gem 'puma'"
 
 after_bundle do
+  # Copy circle.yml
+
+  file "circle.yml", render_file("circle.yml")
+
+  # Overwrite bin/setup
+
+  remove_file "bin/setup"
+  file "bin/setup", render_file("setup")
+
   # Prevent test noise in generators
 
   application \
@@ -105,7 +119,6 @@ after_bundle do
     MD
   end
 
-  # Set up Bootstrap and Font Awesome
 
   remove_file "app/assets/stylesheets/application.css"
   file "app/assets/stylesheets/application.scss",
@@ -130,7 +143,7 @@ after_bundle do
 
   # Remove //= require_tree .
 
-  gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
+  # gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
 
   # Set up dotenv
   file ".env.development", render_file(".env.development")
@@ -143,33 +156,46 @@ after_bundle do
     EOF
   end
 
-  # Set up Active Admin
+  unless skip_active_admin
+    # Set up Active Admin
 
-  generate "active_admin:install"
+    generate "active_admin:install"
 
-  gsub_file "db/seeds.rb",
-    /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
-    "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
+    gsub_file "db/seeds.rb",
+      /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
+      "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
 
-  rails_command "db:migrate"
-  rails_command "db:seed"
+    rails_command "db:migrate"
+    rails_command "db:seed"
+
+    inside "config" do
+      inside "initializers" do
+        insert_into_file "active_admin.rb",
+          after: "ActiveAdmin.setup do |config|\n" do
+          <<-RUBY.gsub(/^        /, "")
+            # If you are using Devise's before_action :authenticate_user!
+            #   in your ApplicationController, then uncomment the following:
+
+            # config.skip_before_filter :authenticate_user!
+
+          RUBY
+        end
+
+        gsub_file "active_admin.rb",
+          "  # config.comments_menu = false\n",
+          "  config.comments_menu = false\n"
+      end
+    end
+  end
+
+  # Mount web_git
 
   inside "config" do
-    inside "initializers" do
-      insert_into_file "active_admin.rb",
-        after: "ActiveAdmin.setup do |config|\n" do
-        <<-RUBY.gsub(/^        /, "")
-          # If you are using Devise's before_action :authenticate_user!
-          #   in your ApplicationController, then uncomment the following:
-
-          # config.skip_before_filter :authenticate_user!
-
-        RUBY
-      end
-
-      gsub_file "active_admin.rb",
-        "  # config.comments_menu = false\n",
-        "  config.comments_menu = false\n"
+    insert_into_file "routes.rb",
+      before: "end\n" do
+      <<-RUBY.gsub(/^      /, "")
+        mount WebGit::Engine, at: "/rails/git"
+      RUBY
     end
   end
 
@@ -270,8 +296,8 @@ after_bundle do
 
   # Add rails grade task
 
-  file "lib/tasks/grade.rake",
-    render_file("grade.rake")
+  # file "lib/tasks/grade.rake",
+  #   render_file("grade.rake")
 
   # Add rails spec:update task
 
@@ -292,6 +318,8 @@ after_bundle do
   gsub_file "app/controllers/application_controller.rb",
     /protect_from_forgery with: :exception/,
     "# protect_from_forgery with: :exception"
+
+  rails_command "db:migrate"
 
   git :init
   git add: "-A"
