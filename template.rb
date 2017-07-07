@@ -223,10 +223,12 @@ after_bundle do
   prepend_file "spec/spec_helper.rb" do
     <<-RUBY.gsub(/^      /, "")
       require "factory_girl_rails"
+      require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
     RUBY
   end
 
   file "spec/support/increasing_random.rb", render_file("increasing_random.rb")
+  file "spec/support/json_output_formatter.rb", render_file("json_output_formatter.rb")
 
   inside "spec" do
     insert_into_file "spec_helper.rb",
@@ -236,53 +238,6 @@ after_bundle do
 
         def h(hint_identifiers)
           hint_identifiers.split.map { |identifier| I18n.t("hints.\#{identifier}") }
-        end
-
-        class RSpec::Core::Formatters::JsonFormatter
-          def dump_summary(summary)
-            total_points = summary.
-            examples.
-            map { |example| example.metadata[:points].to_i }.
-            sum
-
-            earned_points = summary.
-            examples.
-            select { |example| example.execution_result.status == :passed }.
-            map { |example| example.metadata[:points].to_i }.
-            sum
-
-            @output_hash[:summary] = {
-              duration: summary.duration,
-              example_count: summary.example_count,
-              failure_count: summary.failure_count,
-              pending_count: summary.pending_count,
-              total_points: total_points,
-              earned_points: earned_points,
-              score: (earned_points.to_f / total_points).round(4)
-            }
-
-            @output_hash[:summary_line] = [
-              "\#{summary.example_count} tests",
-              "\#{summary.failure_count} failures",
-              "\#{earned_points}/\#{total_points} points",
-              "\#{@output_hash[:summary][:score] * 100}%",
-            ].join(", ")
-          end
-
-          private
-
-          def format_example(example)
-            {
-              description: example.description,
-              full_description: example.full_description,
-              hint: example.metadata[:hint],
-              status: example.execution_result.status.to_s,
-              points: example.metadata[:points],
-              file_path: example.metadata[:file_path],
-              line_number:  example.metadata[:line_number],
-              run_time: example.execution_result.run_time,
-            }
-          end
         end
       RUBY
     end
