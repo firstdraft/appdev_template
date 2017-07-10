@@ -221,7 +221,7 @@ after_bundle do
   end
 
   prepend_file "spec/spec_helper.rb" do
-    <<-RUBY.gsub(/^      /, "")
+    <<-'RUBY'.gsub(/^      /, "")
       require "factory_girl_rails"
       require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
     RUBY
