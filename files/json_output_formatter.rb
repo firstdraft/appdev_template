@@ -24,7 +24,7 @@ class JsonOutputFormatter < RSpec::Core::Formatters::JsonFormatter
       earned_points: earned_points,
       score: (earned_points.to_f / total_points).round(4)
     }
-    binding.pry
+    
     @output_hash[:summary_line] = [
       "#{summary.example_count} tests",
       "#{summary.failure_count} failures",
