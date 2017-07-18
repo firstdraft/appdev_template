@@ -9,4 +9,6 @@ database:
     - bin/setup
 test:
   override:
-    - COVERAGE=true bin/rails grade_runner:runner
+    - RAILS_ENV=test bundle exec rspec --order default --format p --format JsonOutputFormatter --out $CIRCLE_ARTIFACTS/output/rspec_output.json
+  post:
+    - bin/rails grade_runner:runner
