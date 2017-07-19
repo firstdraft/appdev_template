@@ -20,4 +20,4 @@ en:
 
                         The argument to the `redirect_to()` method is **a URL** that we want to send the user to which will trigger _a completely different action_.
 
-                        Don't provide the `redirect_to()` method with a filename as an argument, or vice versa.
+                        Don't provide the `redirect_to()` method with a filename as an argument, or the `render()` method with a URL as an argument.
