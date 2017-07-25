@@ -176,7 +176,7 @@ after_bundle do
             # If you are using Devise's before_action :authenticate_user!
             #   in your ApplicationController, then uncomment the following:
 
-            # config.skip_before_filter :authenticate_user!
+            # config.skip_before_action :authenticate_user!
 
           RUBY
         end
