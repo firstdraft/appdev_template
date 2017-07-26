@@ -7,7 +7,7 @@ namespace :project do
 
     `git checkout -b project-update-#{Time.now.to_i}`
     `git add -A`
-    `git commit -m "Changes before projeect update"`
+    `git commit -m "Changes before project update"`
     `git fetch upstream`
     `git checkout master`
     `git reset --hard upstream/master`
