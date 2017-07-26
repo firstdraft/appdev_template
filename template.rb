@@ -62,7 +62,7 @@ gem_group :test do
 end
 
 gem "activeadmin", github: "activeadmin/activeadmin" unless skip_active_admin
-gem "bootstrap", "~> 4.0.0.alpha6"
+gem "bootstrap-sass"
 gem "devise", github: "plataformatec/devise" unless skip_devise
 gem "jquery-rails"
 gem "font-awesome-sass", "~> 4.7.0"
@@ -82,6 +82,10 @@ after_bundle do
 
   remove_file "bin/setup"
   file "bin/setup", render_file("setup")
+
+  # Add dev:prime task
+
+  file "lib/tasks/dev.rake", render_file("dev.rake")
 
   # Prevent test noise in generators
 
@@ -275,6 +279,8 @@ after_bundle do
     "# protect_from_forgery with: :exception"
 
   rails_command "db:migrate"
+
+  run "chmod 775 bin/setup"
 
   git :init
   git add: "-A"
