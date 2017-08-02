@@ -231,7 +231,6 @@ after_bundle do
     RUBY
   end
 
-  file "spec/support/increasing_random.rb", render_file("increasing_random.rb")
   file "spec/support/json_output_formatter.rb", render_file("json_output_formatter.rb")
 
   inside "spec" do
