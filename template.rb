@@ -253,11 +253,6 @@ after_bundle do
   file "config/locales/en.yml",
     render_file("en.yml")
 
-  # Add rails grade task
-
-  # file "lib/tasks/grade.rake",
-  #   render_file("grade.rake")
-
   # Add rails spec:update task
 
   file "lib/tasks/project.rake",
