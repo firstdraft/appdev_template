@@ -176,7 +176,7 @@ after_bundle do
       inside "initializers" do
         insert_into_file "active_admin.rb",
           after: "ActiveAdmin.setup do |config|\n" do
-          <<-RUBY.gsub(/^        /, "")
+          <<-RUBY.gsub(/^      /, "")
             # If you are using Devise's before_action :authenticate_user!
             #   in your ApplicationController, then uncomment the following:
 
