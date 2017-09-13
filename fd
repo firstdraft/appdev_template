@@ -1,5 +1,8 @@
+--skip-action-cable
 --skip-coffee
 --skip-spring
+--skip-system-test
 --skip-test
 --skip-turbolinks
+--skip-yarn
 --template=https://raw.githubusercontent.com/firstdraft/appdev_template/master/template.rb
