@@ -192,17 +192,6 @@ after_bundle do
     end
   end
 
-  # Mount web_git
-
-  inside "config" do
-    insert_into_file "routes.rb",
-      before: "end\n" do
-      <<-RUBY.gsub(/^      /, "")
-        mount WebGit::Engine, at: "/rails/git"
-      RUBY
-    end
-  end
-
   # Install annotate
 
   generate "annotate:install"
