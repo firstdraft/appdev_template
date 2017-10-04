@@ -253,8 +253,8 @@ after_bundle do
 
   # Add firstdraft configuration
 
-  file ".firstdraft_project.yml",
-    render_file(".firstdraft_project.yml")
+  file ".grades.yml",
+    render_file(".grades.yml")
 
   # Turn off CSRF protection
 
