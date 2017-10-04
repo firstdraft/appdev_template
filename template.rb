@@ -227,6 +227,7 @@ after_bundle do
       after: "RSpec.configure do |config|\n" do
       <<-RUBY.gsub(/^      /, "")
         config.include FactoryGirl::Syntax::Methods
+        config.example_status_persistence_file_path = "examples.txt"
 
         def h(hint_identifiers)
           hint_identifiers.split.map { |identifier| I18n.t("hints.\#{identifier}") }
