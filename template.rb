@@ -1,6 +1,8 @@
 # Helper methods to copy in files
 # ===============================
 
+# TODO: Switch to pg from sqlite
+
 ENV = :prod
 # ENV = :dev
 
@@ -62,10 +64,10 @@ gem_group :test do
 end
 
 gem "activeadmin", github: "activeadmin/activeadmin" unless skip_active_admin
-gem "bootstrap-sass"
+# gem "bootstrap-sass"
 gem "devise", github: "plataformatec/devise" unless skip_devise
 gem "jquery-rails"
-gem "font-awesome-sass", "~> 4.7.0"
+# gem "font-awesome-sass", "~> 4.7.0"
 
 # Use WEBrick
 
@@ -86,6 +88,10 @@ after_bundle do
   # Add dev:prime task
 
   file "lib/tasks/dev.rake", render_file("dev.rake")
+
+  # Add bin/server
+
+  file "bin/server", render_file("server")
 
   # Prevent test noise in generators
 
@@ -123,27 +129,29 @@ after_bundle do
     MD
   end
 
+  # TODO: Add a prompt about whether to include BS and/or FA
+  # TODO: Update for BS4 beta
 
-  remove_file "app/assets/stylesheets/application.css"
-  file "app/assets/stylesheets/application.scss",
-    render_file("application.scss")
-
-  bootstrap_variables_url = "https://raw.githubusercontent.com/twbs/bootstrap-sass/master/templates/project/_bootstrap-variables.sass"
-  file "app/assets/stylesheets/_bootstrap-variables.sass",
-    open(bootstrap_variables_url).read
-
-  inside "app" do
-    inside "assets" do
-      inside "javascripts" do
-        insert_into_file "application.js",
-          after: "//= require rails-ujs\n" do
-
-          "//= require jquery\n"
-          "//= require bootstrap\n"
-        end
-      end
-    end
-  end
+  # remove_file "app/assets/stylesheets/application.css"
+  # file "app/assets/stylesheets/application.scss",
+  #   render_file("application.scss")
+  #
+  # bootstrap_variables_url = "https://raw.githubusercontent.com/twbs/bootstrap-sass/master/templates/project/_bootstrap-variables.sass"
+  # file "app/assets/stylesheets/_bootstrap-variables.sass",
+  #   open(bootstrap_variables_url).read
+  #
+  # inside "app" do
+  #   inside "assets" do
+  #     inside "javascripts" do
+  #       insert_into_file "application.js",
+  #         after: "//= require rails-ujs\n" do
+  #
+  #         "//= require jquery\n"
+  #         "//= require bootstrap\n"
+  #       end
+  #     end
+  #   end
+  # end
 
   # Remove //= require_tree .
 
