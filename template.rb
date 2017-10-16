@@ -43,6 +43,7 @@ gem_group :development, :test do
   gem "pry-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "web_git", github: "firstdraft/web_git"
+  gem "firstdraft_debugger", git: "https://github.com/firstdraft/firstdraft_debugger.git"
 end
 
 gem_group :development do
@@ -264,6 +265,21 @@ after_bundle do
   file ".grades.yml",
     render_file(".grades.yml")
 
+  # Add better error whitelisted ip initializer
+
+  file "config/initializer/whitelist.rb",
+    render_file("whitelist.rb")
+
+  # Add bin executable whitelist
+
+  file "bin/whitelist",
+    render_file("whitelist")
+
+  # Add whitelist yml
+
+  file "whitelist.yml",
+    render_file("whitelist.yml")
+
   # Turn off CSRF protection
 
   gsub_file "app/controllers/application_controller.rb",
@@ -273,6 +289,7 @@ after_bundle do
   rails_command "db:migrate"
 
   run "chmod 775 bin/setup"
+  run "chmod 775 bin/whitelist"
 
   git :init
   git add: "-A"
