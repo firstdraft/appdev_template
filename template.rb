@@ -131,6 +131,20 @@ after_bundle do
     MD
   end
 
+  inside "config" do
+    inside "environments" do
+      insert_into_file "development.rb", :after => "Rails.application.configure do\n" do
+        <<-RB.gsub(/^      /, "")
+          path = Rails.root.join('whitelist.yml')
+          if File.exist?(path)
+            whitelisted_ips = YAML.load_file(path)
+            config.web_console.whitelisted_ips = whitelisted_ips
+          end
+        RB
+      end
+    end
+  end
+
   # TODO: Add a prompt about whether to include BS and/or FA
   # TODO: Update for BS4 beta
 
@@ -278,17 +292,7 @@ after_bundle do
   file "whitelist.yml",
     render_file("whitelist.yml")
 
-  inside "config" do
-    inside "environments" do
-      insert_into_file "development.rb", :after => "Rails.application.configure do\n" do
-        "path = Rails.root.join('whitelist.yml')\n"
-        "if File.exist?(path)\n"
-          "whitelisted_ips = YAML.load_file(path)\n"
-          "config.web_console.whitelisted_ips = whitelisted_ips\n"
-        "end"
-      end
-    end
-  end
+
 
   # Turn off CSRF protection
 
