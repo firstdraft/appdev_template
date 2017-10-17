@@ -268,11 +268,6 @@ after_bundle do
   file ".grades.yml",
     render_file(".grades.yml")
 
-  # Add better error whitelisted ip initializer
-
-  file "config/initializer/whitelist.rb",
-    render_file("whitelist.rb")
-
   # Add bin executable whitelist
 
   file "bin/whitelist",
@@ -282,6 +277,18 @@ after_bundle do
 
   file "whitelist.yml",
     render_file("whitelist.yml")
+
+  inside "config" do
+    inside "environments" do
+      insert_into_file "development.rb", :after => "Rails.application.configure do\n" do
+        "path = Rails.root.join('whitelist.yml')\n"
+        "if File.exist?(path)\n"
+          "whitelisted_ips = YAML.load_file(path)\n"
+          "config.web_console.whitelisted_ips = whitelisted_ips\n"
+        "end"
+      end
+    end
+  end
 
   # Turn off CSRF protection
 
