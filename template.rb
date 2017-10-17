@@ -166,6 +166,8 @@ after_bundle do
 
       # Ignore dotenv files
       /.env*
+
+      whitelist.yml
     EOF
   end
 
