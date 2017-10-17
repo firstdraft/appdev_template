@@ -43,13 +43,14 @@ gem_group :development, :test do
   gem "pry-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "web_git", github: "firstdraft/web_git"
-  gem "firstdraft_debugger", git: "https://github.com/firstdraft/firstdraft_debugger.git"
 end
 
 gem_group :development do
   gem "annotate"
   gem "awesome_print"
   gem "better_errors"
+  gem "firstdraft_debugger", git: "https://github.com/firstdraft/firstdraft_debugger.git"
+  gem "web-console"
   gem "binding_of_caller"
   gem "firstdraft_generators", github: "firstdraft/firstdraft_generators"
   gem "letter_opener"
