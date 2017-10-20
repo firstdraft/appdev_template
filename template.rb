@@ -49,7 +49,7 @@ gem_group :development do
   gem "annotate"
   gem "awesome_print"
   gem "better_errors"
-  gem "firstdraft_debugger", git: "https://github.com/firstdraft/firstdraft_debugger.git"
+  gem "dev_toolbar", git: "https://github.com/firstdraft/dev_toolbar.git"
   gem "web-console"
   gem "binding_of_caller"
   gem "firstdraft_generators", github: "firstdraft/firstdraft_generators"
