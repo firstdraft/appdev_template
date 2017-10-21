@@ -138,7 +138,7 @@ after_bundle do
       inside "layouts" do
         insert_into_file "application.html.erb", :before => "</body>" do
           <<-RB.gsub(/^      /, "")
-            <%= dev_tools %>
+            <%= dev_tools unless Rails.env.development? %>
 
           RB
         end
