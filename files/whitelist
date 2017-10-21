@@ -17,5 +17,5 @@ whitelisted_ips = whitelisted_ips.uniq.compact
 
 File.open(path, 'w') {|f| f.write whitelisted_ips.to_yaml }
 
-puts "Stopping Rails server"
+puts "Stopping Rails server. Please restart it."
 `kill -9 $(lsof -i tcp:8080 -t) >/dev/null 2>/dev/null`
