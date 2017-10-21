@@ -196,7 +196,8 @@ after_bundle do
 
       # Ignore dotenv files
       /.env*
-
+      
+      .rbenv-gemsets
       examples.txt
       .grades.yml
       whitelist.yml
