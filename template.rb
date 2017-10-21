@@ -131,6 +131,21 @@ after_bundle do
     MD
   end
 
+  # Add dev toolbar to application layout
+
+  inside "app" do
+    inside "views" do
+      inside "layouts" do
+        insert_into_file "application.html.erb", :before => "</body>" do
+          <<-RB.gsub(/^      /, "")
+            <%= dev_tools %>
+
+          RB
+        end
+      end
+    end
+  end
+
   inside "config" do
     inside "environments" do
       insert_into_file "development.rb", :after => "Rails.application.configure do\n" do
@@ -182,6 +197,7 @@ after_bundle do
       # Ignore dotenv files
       /.env*
 
+      .grades.yml
       whitelist.yml
     EOF
   end
@@ -278,6 +294,8 @@ after_bundle do
     @app_name
 
   # Add firstdraft configuration
+
+  remove_file ".firstdraft_project.yml"
 
   file ".grades.yml",
     render_file(".grades.yml")
