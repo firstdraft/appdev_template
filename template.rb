@@ -197,6 +197,7 @@ after_bundle do
       # Ignore dotenv files
       /.env*
 
+      examples.txt
       .grades.yml
       whitelist.yml
     EOF
