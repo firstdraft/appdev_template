@@ -293,6 +293,9 @@ after_bundle do
     /app_name/,
     @app_name
 
+
+  remove_file "lib/tasks/grade.rake"
+
   # Add firstdraft configuration
 
   remove_file ".firstdraft_project.yml"
