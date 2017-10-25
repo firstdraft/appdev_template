@@ -188,6 +188,10 @@ after_bundle do
 
   # gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
 
+  # Better backtraces
+
+  file "config/initializers/framework_trace.rb", render_file("framework_trace.rb")
+
   # Set up dotenv
   file ".env.development", render_file(".env.development")
 
@@ -196,7 +200,7 @@ after_bundle do
 
       # Ignore dotenv files
       /.env*
-      
+
       .rbenv-gemsets
       examples.txt
       .grades.yml
