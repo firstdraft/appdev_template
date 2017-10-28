@@ -203,7 +203,7 @@ after_bundle do
 
       .rbenv-gemsets
       examples.txt
-      .grades.yml
+      grades.yml
       whitelist.yml
     EOF
   end
@@ -306,8 +306,8 @@ after_bundle do
 
   remove_file ".firstdraft_project.yml"
 
-  file ".grades.yml",
-    render_file(".grades.yml")
+  file "grades.yml",
+    render_file("grades.yml")
 
   # Add bin executable whitelist
 
