@@ -265,10 +265,12 @@ after_bundle do
     <<-'RUBY'.gsub(/^      /, "")
       require "factory_girl_rails"
       require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
+      require "#{File.expand_path('../support/hint_formatter', __FILE__)}"
     RUBY
   end
 
   file "spec/support/json_output_formatter.rb", render_file("json_output_formatter.rb")
+  file "spec/support/hint_formatter.rb", render_file("hint_formatter.rb")
 
   inside "spec" do
     insert_into_file "spec_helper.rb",
