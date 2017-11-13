@@ -60,7 +60,7 @@ end
 
 gem_group :test do
   gem "capybara"
-  gem "factory_girl_rails"
+  gem "factory_bot_rails"
   gem "rspec-rails"
   gem "webmock"
 end
@@ -101,7 +101,7 @@ after_bundle do
     <<-RB.gsub(/^      /, "")
       config.generators do |g|
             g.test_framework nil
-            g.factory_girl false
+            g.factory_bot false
             g.scaffold_stylesheet false
           end
     RB
@@ -263,7 +263,7 @@ after_bundle do
 
   prepend_file "spec/spec_helper.rb" do
     <<-'RUBY'.gsub(/^      /, "")
-      require "factory_girl_rails"
+      require "factory_bot_rails"
       require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
       require "#{File.expand_path('../support/hint_formatter', __FILE__)}"
     RUBY
