@@ -32,16 +32,16 @@ def render_file(filename)
   end
 end
 
-skip_active_admin = yes?("Skip ActiveAdmin?")
-skip_devise = yes?("Skip Devise?")
+skip_active_admin = false # yes?("Skip ActiveAdmin?")
+skip_devise = false # yes?("Skip Devise?")
 
 # Add standard gems
 # =================
 
 gem_group :development, :test do
   gem "dotenv-rails"
-  gem "pry-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
+  gem "pry-rails"
   gem "web_git", github: "firstdraft/web_git"
 end
 
@@ -49,18 +49,16 @@ gem_group :development do
   gem "annotate"
   gem "awesome_print"
   gem "better_errors"
-  gem "dev_toolbar", git: "https://github.com/firstdraft/dev_toolbar.git"
-  gem "web-console"
   gem "binding_of_caller"
+  gem "dev_toolbar", github: "firstdraft/dev_toolbar"
   gem "firstdraft_generators", github: "firstdraft/firstdraft_generators"
   gem "letter_opener"
   gem "meta_request"
-  gem "wdm", platforms: [:mingw, :mswin, :x64_mingw]
 end
 
 gem_group :test do
   gem "capybara"
-  gem "factory_girl_rails"
+  gem "factory_bot_rails"
   gem "rspec-rails"
   gem "webmock"
 end
@@ -101,7 +99,7 @@ after_bundle do
     <<-RB.gsub(/^      /, "")
       config.generators do |g|
             g.test_framework nil
-            g.factory_girl false
+            g.factory_bot false
             g.scaffold_stylesheet false
           end
     RB
@@ -136,10 +134,10 @@ after_bundle do
   inside "app" do
     inside "views" do
       inside "layouts" do
-        insert_into_file "application.html.erb", :before => "</body>" do
+        insert_into_file "application.html.erb", before: "</body>" do
           <<-RB.gsub(/^      /, "")
-            <%= dev_tools if Rails.env.development? %>
 
+            <%= dev_tools if Rails.env.development? %>
           RB
         end
       end
@@ -148,9 +146,10 @@ after_bundle do
 
   inside "config" do
     inside "environments" do
-      insert_into_file "development.rb", :after => "Rails.application.configure do\n" do
+      insert_into_file "development.rb", after: "Rails.application.configure do\n" do
         <<-RB.gsub(/^      /, "")
-          path = Rails.root.join('whitelist.yml')
+          path = Rails.root.join("whitelist.yml")
+
           if File.exist?(path)
             whitelisted_ips = YAML.load_file(path)
             config.web_console.whitelisted_ips = whitelisted_ips
@@ -171,26 +170,37 @@ after_bundle do
   # file "app/assets/stylesheets/_bootstrap-variables.sass",
   #   open(bootstrap_variables_url).read
   #
-  # inside "app" do
-  #   inside "assets" do
-  #     inside "javascripts" do
-  #       insert_into_file "application.js",
-  #         after: "//= require rails-ujs\n" do
-  #
-  #         "//= require jquery\n"
-  #         "//= require bootstrap\n"
-  #       end
-  #     end
-  #   end
-  # end
+  inside "app" do
+    inside "assets" do
+      inside "javascripts" do
+        insert_into_file "application.js",
+          after: "//= require rails-ujs\n" do
 
-  # Remove //= require_tree .
+          "//= require jquery\n"
+        end
+      end
+    end
+  end
 
-  # gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
+  # Remove *= require_tree .
+
+  gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
 
   # Better backtraces
 
   file "config/initializers/framework_trace.rb", render_file("framework_trace.rb")
+
+  inside "config" do
+    inside "initializers" do
+      append_file "backtrace_silencers.rb" do
+        <<-RUBY.gsub(/^          /, "")
+
+          Rails.backtrace_cleaner.add_silencer { |line| line =~ /lib/ }
+
+        RUBY
+      end
+    end
+  end
 
   # Set up dotenv
   file ".env.development", render_file(".env.development")
@@ -263,7 +273,7 @@ after_bundle do
 
   prepend_file "spec/spec_helper.rb" do
     <<-'RUBY'.gsub(/^      /, "")
-      require "factory_girl_rails"
+      require "factory_bot_rails"
       require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
       require "#{File.expand_path('../support/hint_formatter', __FILE__)}"
     RUBY
@@ -276,7 +286,7 @@ after_bundle do
     insert_into_file "spec_helper.rb",
       after: "RSpec.configure do |config|\n" do
       <<-RUBY.gsub(/^      /, "")
-        config.include FactoryGirl::Syntax::Methods
+        config.include FactoryBot::Syntax::Methods
         config.example_status_persistence_file_path = "examples.txt"
 
         def h(hint_identifiers)
@@ -331,6 +341,7 @@ after_bundle do
 
   rails_command "db:migrate"
 
+  run "chmod 775 bin/server"
   run "chmod 775 bin/setup"
   run "chmod 775 bin/whitelist"
 
