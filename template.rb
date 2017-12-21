@@ -66,7 +66,7 @@ end
 gem "activeadmin", github: "activeadmin/activeadmin" unless skip_active_admin
 # gem "bootstrap-sass"
 gem "devise", github: "plataformatec/devise" unless skip_devise
-gem "jquery-rails"
+# gem "jquery-rails"
 # gem "font-awesome-sass", "~> 4.7.0"
 
 # Use WEBrick
@@ -134,8 +134,8 @@ after_bundle do
   inside "app" do
     inside "views" do
       inside "layouts" do
-        insert_into_file "application.html.erb", before: "</body>" do
-          <<-RB.gsub(/^      /, "")
+        insert_into_file "application.html.erb", before: "  </body>" do
+          <<-RB.gsub(/^        /, "")
 
             <%= dev_tools if Rails.env.development? %>
           RB
@@ -171,12 +171,29 @@ after_bundle do
   #   open(bootstrap_variables_url).read
   #
   inside "app" do
-    inside "assets" do
-      inside "javascripts" do
-        insert_into_file "application.js",
-          after: "//= require rails-ujs\n" do
+    inside "views" do
+      inside "layouts" do
+        insert_into_file "application.html.erb",
+          after: "    <%= csrf_meta_tags %>\n" do
+            <<-HTML.gsub(/^        /, "")
 
-          "//= require jquery\n"
+            <!-- Expand the number of characters we support beyond plain English 💯 -->
+            <meta charset="utf-8">
+
+            <!-- Make it responsive to small screens -->
+            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+            <!-- Connect Font Awesome CSS -->
+            <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
+
+            <!-- Connect Bootstrap CSS -->
+            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+
+            <!-- Connect Bootstrap JS and dependencies -->
+            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+          HTML
         end
       end
     end
@@ -352,6 +369,8 @@ end
 
 # TODO List
 # =========
+
+# Ensure inherited resources is not being used by generators
 
 # Add a rails engine to provide /console in all apps
 # Add a rails engine to provide /git in all apps
