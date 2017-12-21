@@ -177,7 +177,7 @@ after_bundle do
           after: "    <%= csrf_meta_tags %>\n" do
             <<-HTML.gsub(/^        /, "")
 
-            <!-- Expand the number of characters we support beyond plain English 💯 -->
+            <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
             <meta charset="utf-8">
 
             <!-- Make it responsive to small screens -->
