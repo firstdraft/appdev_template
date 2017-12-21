@@ -184,10 +184,10 @@ after_bundle do
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
             <!-- Connect Font Awesome CSS -->
-            <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.2/css/all.css">
 
             <!-- Connect Bootstrap CSS -->
-            <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 
             <!-- Connect Bootstrap JS and dependencies -->
             <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
