@@ -63,9 +63,9 @@ gem_group :test do
   gem "webmock"
 end
 
-gem "activeadmin", github: "activeadmin/activeadmin" unless skip_active_admin
+gem "activeadmin" unless skip_active_admin
 # gem "bootstrap-sass"
-gem "devise", github: "plataformatec/devise" unless skip_devise
+gem "devise" unless skip_devise
 # gem "jquery-rails"
 # gem "font-awesome-sass", "~> 4.7.0"
 
