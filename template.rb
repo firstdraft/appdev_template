@@ -51,7 +51,7 @@ gem_group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "dev_toolbar", github: "firstdraft/dev_toolbar"
-  gem "firstdraft_generators", github: "firstdraft/firstdraft_generators"
+  gem "draft_generators", github: "firstdraft/draft_generators"
   gem "letter_opener"
   gem "meta_request"
 end
