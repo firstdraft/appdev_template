@@ -61,6 +61,7 @@ gem_group :test do
   gem "factory_bot_rails"
   gem "rspec-rails"
   gem "webmock"
+  gem 'rspec-html-matchers'
 end
 
 gem "activeadmin" unless skip_active_admin
