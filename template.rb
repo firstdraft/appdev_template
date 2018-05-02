@@ -55,7 +55,7 @@ gem_group :development do
   gem "draft_generators", github: "firstdraft/draft_generators"
   gem "letter_opener"
   gem "meta_request"
-  gem 'console_ip_whitelist'
+  gem 'console_ip_whitelist', github: "firstdraft/console_ip_whitelist"
 end
 
 gem_group :test do
