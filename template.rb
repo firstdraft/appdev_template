@@ -152,11 +152,18 @@ after_bundle do
       insert_into_file "development.rb", after: "Rails.application.configure do\n" do
         <<-RB.gsub(/^      /, "")
           path = Rails.root.join("whitelist.yml")
+          default_whitelist_path = Rails.root.join("whitelist.yml")
+          whitelisted_ips = []
 
           if File.exist?(path)
             whitelisted_ips = YAML.load_file(path)
-            config.web_console.whitelisted_ips = whitelisted_ips
           end
+
+          if File.exist?(default_whitelist_path)
+            whitelisted_ips = whitelisted_ips.concat(YAML.load_file(default_whitelist_path))
+          end
+
+          config.web_console.whitelisted_ips = whitelisted_ips
         RB
       end
     end
@@ -234,6 +241,7 @@ after_bundle do
       .rbenv-gemsets
       examples.txt
       grades.yml
+      default_whitelist.yml
       whitelist.yml
       grades.yml
     EOF
@@ -349,8 +357,8 @@ after_bundle do
 
   # Add whitelist yml
 
-  file "whitelist.yml",
-    render_file("whitelist.yml")
+  file "default_whitelist.yml",
+    render_file("default_whitelist.yml")
 
 
 
