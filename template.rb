@@ -152,7 +152,7 @@ after_bundle do
       insert_into_file "development.rb", after: "Rails.application.configure do\n" do
         <<-RB.gsub(/^      /, "")
           path = Rails.root.join("whitelist.yml")
-          default_whitelist_path = Rails.root.join("whitelist.yml")
+          default_whitelist_path = Rails.root.join("default_whitelist.yml")
           whitelisted_ips = []
 
           if File.exist?(path)
