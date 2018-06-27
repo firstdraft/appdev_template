@@ -34,8 +34,8 @@ end
 
 # skip_active_admin = false
 # skip_devise = false
-yes?("Skip ActiveAdmin?")
-yes?("Skip Devise?")
+skip_active_admin = yes?("Skip ActiveAdmin?")
+skip_devise = yes?("Skip Devise?")
 
 # Add standard gems
 # =================
