@@ -208,20 +208,21 @@ after_bundle do
     end
   end
 
-  # Remove *= require_tree .
+  # Remove require_tree .
 
   gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
+  gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
 
   # Better backtraces
 
-  file "config/initializers/framework_trace.rb", render_file("framework_trace.rb")
+  file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
 
   inside "config" do
     inside "initializers" do
       append_file "backtrace_silencers.rb" do
         <<-RUBY.gsub(/^          /, "")
 
-          Rails.backtrace_cleaner.add_silencer { |line| line =~ /lib/ }
+          Rails.backtrace_cleaner.add_silencer { |line| line =~ /lib|gems/ }
 
         RUBY
       end
