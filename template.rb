@@ -32,8 +32,10 @@ def render_file(filename)
   end
 end
 
-skip_active_admin = false # yes?("Skip ActiveAdmin?")
-skip_devise = false # yes?("Skip Devise?")
+# skip_active_admin = false
+# skip_devise = false
+yes?("Skip ActiveAdmin?")
+yes?("Skip Devise?")
 
 # Add standard gems
 # =================
