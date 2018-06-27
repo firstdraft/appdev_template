@@ -66,9 +66,9 @@ gem_group :test do
   gem 'rspec-html-matchers'
 end
 
+gem "devise" unless skip_devise
 gem "activeadmin" unless skip_active_admin
 # gem "bootstrap-sass"
-gem "devise" unless skip_devise
 # gem "jquery-rails"
 # gem "font-awesome-sass", "~> 4.7.0"
 
@@ -241,7 +241,6 @@ after_bundle do
       .rbenv-gemsets
       examples.txt
       grades.yml
-      default_whitelist.yml
       whitelist.yml
       grades.yml
     EOF
@@ -275,6 +274,10 @@ after_bundle do
         gsub_file "active_admin.rb",
           "  # config.comments_menu = false\n",
           "  config.comments_menu = false\n"
+
+        gsub_file "active_admin.rb",
+          "  # config.comments_registration_name = 'AdminComment'\n",
+          "  config.comments_registration_name = 'AdminComment'\n"
       end
     end
   end
