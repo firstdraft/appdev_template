@@ -193,7 +193,7 @@ after_bundle do
             <meta charset="utf-8">
 
             <!-- Connect Font Awesome CSS -->
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.2/css/all.css">
+            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
 
             <!-- Connect Bootstrap CSS -->
             <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
