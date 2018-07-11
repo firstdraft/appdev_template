@@ -244,7 +244,7 @@ after_bundle do
       examples.txt
       grades.yml
       whitelist.yml
-      grades.yml
+      goodies.sh
     EOF
   end
 
