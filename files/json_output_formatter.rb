@@ -29,7 +29,7 @@ class JsonOutputFormatter < RSpec::Core::Formatters::JsonFormatter
       "#{summary.example_count} tests",
       "#{summary.failure_count} failures",
       "#{earned_points}/#{total_points} points",
-      "#{@output_hash[:summary][:score] * 100}%",
+      "#{(@output_hash[:summary][:score] * 100).round(2)}%",
     ].join(", ")
   end
 
