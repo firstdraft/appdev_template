@@ -298,7 +298,8 @@ after_bundle do
   generate "rspec:install"
 
   remove_file ".ruby-version"
-
+  gsub_file "Gemfile", /^ruby .*/, ""
+  
   remove_file ".rspec"
   file ".rspec", render_file(".rspec")
 
