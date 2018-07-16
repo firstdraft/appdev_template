@@ -234,6 +234,11 @@ after_bundle do
   # Set up dotenv
   file ".env.development", render_file(".env.development")
 
+  create_file ".gitignore" do
+    "/tmp/*
+/log/*"
+  end unless File.exist?(".gitignore")
+
   append_file ".gitignore" do
     <<-EOF.gsub(/^      /, "")
 
@@ -291,6 +296,8 @@ after_bundle do
   # Set up rspec and capybara
 
   generate "rspec:install"
+
+  remove_file ".ruby-version"
 
   remove_file ".rspec"
   file ".rspec", render_file(".rspec")
