@@ -28,6 +28,7 @@ chdir APP_ROOT do
   puts "\n== Preparing database =="
   system! "rails db:create"
   system! "rails db:migrate"
+  system! "rails db:seed"
   # system! "bin/rails dev:prime"
 
   # This script is a starting point to setup your application.
