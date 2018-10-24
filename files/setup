@@ -15,8 +15,6 @@ chdir APP_ROOT do
   # Add necessary setup steps to this file.
 
   puts "== Installing dependencies =="
-  system! "rvm install 2.5.1"
-  system! "rvm use 2.5.1 --default"
   system! "bundle install"
 
   # Install JavaScript dependencies if using Yarn
