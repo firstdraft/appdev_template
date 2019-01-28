@@ -37,7 +37,7 @@ chdir APP_ROOT do
 
 
   puts "\n== Installing web_git dependencies =="
-  system! "npm install -g diff2html-cli"
+  system! "npm install diff2html-cli"
 
   puts "\n== Installing Cloud9 plugins  =="
   system! "curl --remote-name https://raw.githubusercontent.com/firstdraft/cloud9-setup/master/cloud9_plugins.sh"
