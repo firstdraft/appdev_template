@@ -241,6 +241,11 @@ after_bundle do
     end
   end
 
+  initializer 'open_uri.rb', <<-CODE
+    require "open-uri"
+
+  CODE
+
   # Set up dotenv
   file ".env.development", render_file(".env.development")
 
