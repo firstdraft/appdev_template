@@ -242,9 +242,12 @@ after_bundle do
 
       .rbenv-gemsets
       examples.txt
-      grades.yml
       whitelist.yml
-      goodies.sh
+      grades.yml
+      cloud9_plugins.sh
+      appdev/
+      node_modules
+      package-lock.json
     EOF
   end
 
