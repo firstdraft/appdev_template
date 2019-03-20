@@ -37,27 +37,32 @@ end
 skip_active_admin = yes?("Skip ActiveAdmin?")
 skip_devise = yes?("Skip Devise?")
 
+# Remove default sqlite3 version
+# =================
+gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
+
 # Add standard gems
 # =================
 
 gem_group :development, :test do
+  gem "awesome_print"
+  gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
   gem "dotenv-rails"
+  gem "draft_log", github: "firstdraft/draft_log"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "pry-rails"
+  gem "sqlite3", "~> 1.3.6"
   gem "web_git", github: "firstdraft/web_git"
-  gem "awesome_print"
 end
 
 gem_group :development do
   gem "annotate"
-  gem "draft_log", github: "firstdraft/draft_log"
   gem "better_errors"
   gem "binding_of_caller"
   gem "dev_toolbar", github: "firstdraft/dev_toolbar"
   gem "draft_generators", github: "firstdraft/draft_generators"
   gem "letter_opener"
   gem "meta_request"
-  gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
 end
 
 gem_group :test do
@@ -66,6 +71,11 @@ gem_group :test do
   gem "rspec-rails"
   gem "webmock"
   gem 'rspec-html-matchers'
+end
+
+gem_group :production do
+  gem "pg"
+  gem "rails_12factor"
 end
 
 gem "devise" unless skip_devise
