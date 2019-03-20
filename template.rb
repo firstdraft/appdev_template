@@ -383,8 +383,10 @@ after_bundle do
   # Turn off CSRF protection
 
   gsub_file "app/controllers/application_controller.rb",
-    /protect_from_forgery with: :exception/,
-    "# protect_from_forgery with: :exception"
+    /class ApplicationController < ActionController::Base/,
+    "class ApplicationController < ActionController::Base\n" +
+    "\t# protect_from_forgery with: :exception\n" +
+    "\tskip_before_action :verify_authenticity_token, raise: false"
 
   rails_command "db:migrate"
 
