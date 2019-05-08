@@ -44,6 +44,7 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 # Add standard gems
 # =================
 
+
 gem_group :development, :test do
   gem "awesome_print"
   gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
@@ -51,6 +52,7 @@ gem_group :development, :test do
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "pry-rails"
   gem "sqlite3", "~> 1.3.6"
+  gem "table_print"
   gem "web_git", github: "firstdraft/web_git"
 end
 
