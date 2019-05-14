@@ -280,30 +280,36 @@ after_bundle do
 
     inside "config" do
       inside "initializers" do
+
         insert_into_file "active_admin.rb",
-          after: "ActiveAdmin.setup do |config|\n" do
-          <<-RUBY.gsub(/^      /, "")
+          before: "ActiveAdmin.setup do |config|\n" do
+          <<-RUBY
             Rails.application.routes.append do
               devise_for :admin_users, ActiveAdmin::Devise.config
               ActiveAdmin.routes(self)
             end
-
-            # If you are using Devise's before_action :authenticate_user!
-            #   in your ApplicationController, then uncomment the following:
-
-            # config.skip_before_action :authenticate_user!
-
           RUBY
+          end
+          insert_into_file "active_admin.rb",
+            after: "ActiveAdmin.setup do |config|\n" do
+            <<-RUBY.gsub(/^      /, "")
+
+              # If you are using Devise's before_action :authenticate_user!
+              #   in your ApplicationController, then uncomment the following:
+
+              # config.skip_before_action :authenticate_user!
+
+            RUBY
+          end
+
+          gsub_file "active_admin.rb",
+            "  # config.comments_menu = false\n",
+            "  config.comments_menu = false\n"
+
+          gsub_file "active_admin.rb",
+            "  # config.comments_registration_name = 'AdminComment'\n",
+            "  config.comments_registration_name = 'AdminComment'\n"
         end
-
-        gsub_file "active_admin.rb",
-          "  # config.comments_menu = false\n",
-          "  config.comments_menu = false\n"
-
-        gsub_file "active_admin.rb",
-          "  # config.comments_registration_name = 'AdminComment'\n",
-          "  config.comments_registration_name = 'AdminComment'\n"
-      end
     end
   end
 
