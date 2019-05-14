@@ -228,8 +228,6 @@ after_bundle do
 
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
 
-  file "config/initializers/active_admin.rb", render_file("active_admin.rb")
-
   inside "config" do
     inside "initializers" do
       append_file "backtrace_silencers.rb" do
@@ -279,11 +277,17 @@ after_bundle do
     rails_command "db:migrate"
     rails_command "db:seed"
 
+
     inside "config" do
       inside "initializers" do
         insert_into_file "active_admin.rb",
           after: "ActiveAdmin.setup do |config|\n" do
           <<-RUBY.gsub(/^      /, "")
+            Rails.application.routes.append do
+              devise_for :admin_users, ActiveAdmin::Devise.config
+              ActiveAdmin.routes(self)
+            end
+
             # If you are using Devise's before_action :authenticate_user!
             #   in your ApplicationController, then uncomment the following:
 
