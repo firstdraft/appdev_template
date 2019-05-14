@@ -282,7 +282,7 @@ after_bundle do
       inside "initializers" do
         insert_into_file "active_admin.rb",
           before: "ActiveAdmin.setup do |config|\n" do
-          <<-RUBY
+          <<-RUBY.gsub(/^      /, "")
             Rails.application.routes.append do
               devise_for :admin_users, ActiveAdmin::Devise.config
               ActiveAdmin.routes(self)
@@ -297,11 +297,6 @@ after_bundle do
         insert_into_file "active_admin.rb",
           after: "ActiveAdmin.setup do |config|\n" do
           <<-RUBY.gsub(/^      /, "")
-            Rails.application.routes.append do
-              devise_for :admin_users, ActiveAdmin::Devise.config
-              ActiveAdmin.routes(self)
-            end
-
             # If you are using Devise's before_action :authenticate_user!
             #   in your ApplicationController, then uncomment the following:
 
