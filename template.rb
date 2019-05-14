@@ -278,21 +278,15 @@ after_bundle do
     rails_command "db:seed"
 
 
-    inside "config" do
-      gsub_file "routes.rb",
-      "
-        Rails.application.routes.append do
-          devise_for :admin_users, ActiveAdmin::Devise.config
-          ActiveAdmin.routes(self)
-        end
-      ", ""
-    end
+
+    gsub_file "config/routes.rb",
+      "  devise_for :admin_users, ActiveAdmin::Devise.config\n	  ActiveAdmin.routes(self)\n", ""
 
     inside "config" do
       inside "initializers" do
         insert_into_file "active_admin.rb",
           before: "ActiveAdmin.setup do |config|\n" do
-          <<-RUBY.gsub(/^      /, "")
+          <<-RUBY.gsub(/^      /, "")ls s
             Rails.application.routes.append do
               devise_for :admin_users, ActiveAdmin::Devise.config
               ActiveAdmin.routes(self)
