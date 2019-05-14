@@ -279,6 +279,16 @@ after_bundle do
 
 
     inside "config" do
+      gsub_file "routes.rb",
+      "
+        Rails.application.routes.append do
+          devise_for :admin_users, ActiveAdmin::Devise.config
+          ActiveAdmin.routes(self)
+        end
+      ", ""
+    end
+
+    inside "config" do
       inside "initializers" do
         insert_into_file "active_admin.rb",
           before: "ActiveAdmin.setup do |config|\n" do
