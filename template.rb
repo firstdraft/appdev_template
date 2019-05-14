@@ -228,6 +228,8 @@ after_bundle do
 
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
 
+  file "config/initializers/active_admin.rb", render_file("active_admin.rb")
+
   inside "config" do
     inside "initializers" do
       append_file "backtrace_silencers.rb" do
