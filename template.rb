@@ -231,6 +231,7 @@ after_bundle do
   file "config/initializers/active_record_relation_patch.rb", render_file("active_record_relation_patch.rb")
 
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
+  file "config/initializers/delegation_monkey_patch.rb", render_file("delegation_monkey_patch.rb")
 
 
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
