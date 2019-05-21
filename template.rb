@@ -25,7 +25,8 @@ def render_file(filename)
     begin
       open(path_to_file(filename)).read
     rescue
-      open(path_to_blob(filename)).read
+      file = File.join(File.expand_path(File.dirname(__FILE__)), "files", filename)
+      open(file).read
     end
   else
     IO.read(path_to_file(filename))
