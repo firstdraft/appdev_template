@@ -319,6 +319,9 @@ after_bundle do
   remove_file ".rspec"
   file ".rspec", render_file(".rspec")
 
+  empty_directory File.join("spec", "features")
+  file "spec/features/dummy_spec.rb", render_file("dummy_spec.rb")
+
   inside "spec" do
     insert_into_file "rails_helper.rb",
       after: "require 'rspec/rails'\n" do
