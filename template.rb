@@ -234,6 +234,8 @@ after_bundle do
 
 
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
+  file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
+
 
   inside "config" do
     inside "initializers" do
