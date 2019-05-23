@@ -228,6 +228,7 @@ after_bundle do
   gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
 
   # Better backtraces
+  file "config/initializers/active_record_relation_patch.rb", render_file("active_record_relation_patch.rb")
 
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
 
