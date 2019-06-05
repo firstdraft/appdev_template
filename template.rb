@@ -112,9 +112,13 @@ after_bundle do
 
   # Prevent test noise in generators
 
-  application \
-    <<-RB.gsub(/^      /, "")
-      config.generators do |g|
+  load_defaults = open("config/application.rb").read.to_s.match(/config.load_defaults \d.\d\n/)
+
+  inside "config" do
+    insert_into_file "application.rb",
+      after: load_defaults[0] do
+      <<-RUBY.gsub(/^      /, "")
+          config.generators do |g|
             g.test_framework nil
             g.factory_bot false
             g.scaffold_stylesheet false
@@ -122,7 +126,10 @@ after_bundle do
             g.javascripts     false
             g.helper          false
           end
-    RB
+          config.action_controller.default_protect_from_forgery = false
+          RUBY
+      end
+  end
 
   # Configure mailer in development
 
@@ -397,16 +404,6 @@ after_bundle do
 
   file "default_whitelist.yml",
     render_file("default_whitelist.yml")
-
-
-
-  # Turn off CSRF protection
-
-  gsub_file "app/controllers/application_controller.rb",
-    /class ApplicationController < ActionController::Base/,
-    "class ApplicationController < ActionController::Base\n" +
-    "\t# protect_from_forgery with: :exception\n" +
-    "\tskip_before_action :verify_authenticity_token, raise: false"
 
   rails_command "db:migrate"
 
