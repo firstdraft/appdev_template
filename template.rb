@@ -118,6 +118,9 @@ after_bundle do
             g.test_framework nil
             g.factory_bot false
             g.scaffold_stylesheet false
+            g.stylesheets     false
+            g.javascripts     false
+            g.helper          false
           end
     RB
 
