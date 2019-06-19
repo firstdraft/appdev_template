@@ -40,7 +40,7 @@ skip_devise = yes?("Skip Devise?")
 
 # Remove default sqlite3 version
 # =================
-gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
+# gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 
 # Add standard gems
 # =================
@@ -48,21 +48,19 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 
 gem_group :development, :test do
   gem "awesome_print"
-  gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
+  gem "console_ip_whitelist"
   gem "dotenv-rails"
-  gem "grade_runner", github: "firstdraft/grade_runner"
+  gem "grade_runner"
   gem "pry-rails"
-  gem "sqlite3", "~> 1.3.6"
   gem "table_print"
-  gem "web_git", github: "firstdraft/web_git"
 end
 
 gem_group :development do
   gem "annotate"
   gem "better_errors"
   gem "binding_of_caller"
-  gem "dev_toolbar", github: "firstdraft/dev_toolbar"
-  gem "draft_generators", github: "firstdraft/draft_generators"
+  gem "dev_toolbar"
+  gem "draft_generators"
   gem "letter_opener"
   gem "meta_request"
 end
@@ -73,11 +71,6 @@ gem_group :test do
   gem "rspec-rails"
   gem "webmock"
   gem 'rspec-html-matchers'
-end
-
-gem_group :production do
-  gem "pg"
-  gem "rails_12factor"
 end
 
 gem "devise" unless skip_devise
@@ -103,7 +96,7 @@ after_bundle do
   file "bin/setup", render_file("setup")
 
   # Add dev:prime task
-
+  # dummy.rake instead
   file "lib/tasks/dev.rake", render_file("dev.rake")
 
   # Add bin/server
