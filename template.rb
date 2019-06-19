@@ -38,9 +38,16 @@ end
 skip_active_admin = yes?("Skip ActiveAdmin?")
 skip_devise = yes?("Skip Devise?")
 
+# Remove .ruby_version
+remove_file ".ruby-version"
+
 # Remove default sqlite3 version
 # =================
 gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
+
+# Remove ruby-version version
+# =================
+gsub_file "Gemfile", /ruby .*/,''
 
 # Add standard gems
 # =================
