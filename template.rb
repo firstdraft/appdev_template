@@ -33,10 +33,10 @@ def render_file(filename)
   end
 end
 
-# skip_active_admin = false
-# skip_devise = false
-skip_active_admin = yes?("Skip ActiveAdmin?")
-skip_devise = yes?("Skip Devise?")
+skip_active_admin = false
+skip_devise = false
+# skip_active_admin = yes?("Skip ActiveAdmin?")
+# skip_devise = yes?("Skip Devise?")
 
 # Remove default sqlite3 version
 # =================
@@ -93,10 +93,6 @@ gem "activeadmin" unless skip_active_admin
 #   "# gem 'puma'"
 
 after_bundle do
-  # Copy circle.yml
-
-  file "circle.yml", render_file("circle.yml")
-
   # Overwrite bin/setup
 
   remove_file "bin/setup"
@@ -187,7 +183,8 @@ after_bundle do
             whitelisted_ips = whitelisted_ips.concat(YAML.load_file(default_whitelist_path))
           end
 
-          config.web_console.whitelisted_ips = whitelisted_ips
+          config.web_console.permissions = whitelisted_ips
+          config.web_console.whiny_requests = false
         RB
       end
     end
