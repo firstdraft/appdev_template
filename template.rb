@@ -45,6 +45,7 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 # Add standard gems
 # =================
 
+gem "hashdiff", [">= 1.0.0.beta1", "< 2.0.0"]
 
 gem_group :development, :test do
   gem "awesome_print"
@@ -54,14 +55,13 @@ gem_group :development, :test do
   gem "pry-rails"
   gem "sqlite3", "~> 1.3.6"
   gem "table_print"
-  gem "web_git", github: "firstdraft/web_git"
+  gem "web_git"
 end
 
 gem_group :development do
   gem "annotate"
   gem "better_errors"
   gem "binding_of_caller"
-  gem "dev_toolbar", github: "firstdraft/dev_toolbar"
   gem "draft_generators", github: "firstdraft/draft_generators"
   gem "letter_opener"
   gem "meta_request"
@@ -123,6 +123,7 @@ after_bundle do
             g.helper          false
           end
           config.action_controller.default_protect_from_forgery = false
+          config.active_record.belongs_to_required_by_default = false
           RUBY
       end
   end
@@ -152,20 +153,6 @@ after_bundle do
     MD
   end
 
-  # Add dev toolbar to application layout
-
-  inside "app" do
-    inside "views" do
-      inside "layouts" do
-        insert_into_file "application.html.erb", before: "  </body>" do
-          <<-RB.gsub(/^        /, "")
-
-            <%= dev_tools if Rails.env.development? %>
-          RB
-        end
-      end
-    end
-  end
 
   inside "config" do
     inside "environments" do
@@ -189,6 +176,10 @@ after_bundle do
       end
     end
   end
+
+  gsub_file "config/environments/development.rb",
+    "config.assets.debug = true",
+    "config.assets.debug = false"
 
   # TODO: Add a prompt about whether to include BS and/or FA
   # TODO: Update for BS4 beta
@@ -229,6 +220,8 @@ after_bundle do
     end
   end
 
+  empty_directory File.join("app", "views", "application")
+
   # Remove require_tree .
 
   gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
@@ -244,6 +237,7 @@ after_bundle do
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
 
+  file ".codio", render_file(".codio")
 
   inside "config" do
     inside "initializers" do
@@ -281,6 +275,10 @@ after_bundle do
       package-lock.json
     EOF
   end
+
+  gsub_file ".gitignore",
+  "/db/*.sqlite3\n/db/*.sqlite3-journal",
+  "# /db/*.sqlite3\n# /db/*.sqlite3-journal"
 
   unless skip_active_admin
     # Set up Active Admin
