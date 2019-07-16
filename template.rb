@@ -34,9 +34,8 @@ def render_file(filename)
 end
 
 skip_active_admin = false
-skip_devise = false
-# skip_active_admin = yes?("Skip ActiveAdmin?")
-# skip_devise = yes?("Skip Devise?")
+# skip_devise = false
+skip_devise = yes?("Skip Devise?")
 
 # Remove default sqlite3 version
 # =================
