@@ -238,6 +238,7 @@ after_bundle do
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
 
   file ".codio", render_file(".codio")
+  file ".pryrc", render_file(".pryrc")
 
   inside "config" do
     inside "initializers" do
