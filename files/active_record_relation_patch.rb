@@ -1,7 +1,9 @@
 module ActiveRecord
   class Relation
     def to_s
-      "Array containing #{count} #{model} #{"record".pluralize(count)}"
+      row_count = count
+      
+      "Array containing #{row_count} #{model} #{"record".pluralize(row_count)}"
     end
   end
 end
