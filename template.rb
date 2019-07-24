@@ -347,6 +347,10 @@ after_bundle do
     end
   end
 
+  # Remove concerns folders
+  remove_dir "app/controllers/concerns"
+  remove_dir "app/models/concerns"
+
   prepend_file "spec/spec_helper.rb" do
     <<-'RUBY'.gsub(/^      /, "")
       require "factory_bot_rails"
