@@ -64,6 +64,8 @@ gem_group :development do
   gem "draft_generators", github: "firstdraft/draft_generators"
   gem "letter_opener"
   gem "meta_request"
+  gem "rubocop-performance"
+  gem "rubocop-rails"
 end
 
 gem_group :test do
@@ -241,6 +243,7 @@ after_bundle do
 
   file ".codio", render_file(".codio")
   file ".pryrc", render_file(".pryrc")
+  file ".rubocop.yml", render_file(".rubocop.yml")
 
   inside "config" do
     inside "initializers" do
@@ -288,9 +291,21 @@ after_bundle do
 
     generate "active_admin:install"
 
+    gsub_file "config/initializers/devise.rb",
+      "-at-config-initializers-devise",
+      ""
+
     gsub_file "db/seeds.rb",
-      /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
-      "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
+      /AdminUser.create!.*/,
+      <<~RUBY
+        if Rails.env.development?
+          AdminUser.create({
+            :email => "admin@example.com",
+            :password => "password",
+            :password_confirmation => "password",
+          })
+        end
+      RUBY
 
     rails_command "db:migrate"
     rails_command "db:seed"
@@ -319,6 +334,10 @@ after_bundle do
         gsub_file "active_admin.rb",
           "  # config.comments_registration_name = 'AdminComment'\n",
           "  config.comments_registration_name = 'AdminComment'\n"
+       
+        gsub_file "active_admin.rb",
+          ".filter_attributes = %i[encrypted_password password password_confirmation]",
+          "\n\t.filter_attributes = %i[encrypted_password password password_confirmation]"
       end
     end
   end
@@ -345,7 +364,20 @@ after_bundle do
         require "capybara/rspec"
       RUBY
     end
+
+    gsub_file "rails_helper.rb",
+      /abort.* if Rails.env.production\?/,
+      <<~RUBY
+        if Rails.env.production?
+          abort("The Rails environment is running in production mode!")
+        end
+      RUBY
   end
+
+  # Rubocoppin'
+  gsub_file "app/admin/dashboard.rb",
+    "end # content",
+    "end"
 
   # Remove concerns folders
   remove_dir "app/controllers/concerns"
