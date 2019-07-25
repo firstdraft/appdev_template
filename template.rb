@@ -45,6 +45,7 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 # =================
 
 gem "hashdiff", [">= 1.0.0.beta1", "< 2.0.0"]
+gem "tty-spinner"
 
 gem_group :development, :test do
   gem "awesome_print"
