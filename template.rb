@@ -289,8 +289,16 @@ after_bundle do
     generate "active_admin:install"
 
     gsub_file "db/seeds.rb",
-      /AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password')/,
-      "AdminUser.create(email: \"admin@example.com\", password: \"password\", password_confirmation: \"password\")"
+      /AdminUser.create!.*/,
+      <<~RUBY
+        if Rails.env.development?
+          AdminUser.create({
+            :email => "admin@example.com",
+            :password => "password",
+            :password_confirmation => "password",
+          })
+        end
+      RUBY
 
     rails_command "db:migrate"
     rails_command "db:seed"
