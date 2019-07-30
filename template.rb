@@ -382,16 +382,6 @@ after_bundle do
   file "config/locales/en.yml",
     render_file("en.yml")
 
-  # Add rails spec:update task
-
-  file "lib/tasks/project.rake",
-    render_file("project.rake")
-
-  gsub_file "lib/tasks/project.rake",
-    /app_name/,
-    @app_name
-
-
   remove_file "lib/tasks/grade.rake"
 
   # Add firstdraft configuration
