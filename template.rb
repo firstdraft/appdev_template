@@ -327,6 +327,14 @@ after_bundle do
         gsub_file "active_admin.rb",
           "  # config.comments_registration_name = 'AdminComment'\n",
           "  config.comments_registration_name = 'AdminComment'\n"
+
+         gsub_file "wrap_parameters.rb",
+           /# A.+\D*/,
+           <<~RUBY
+           ActiveSupport.on_load(:active_record) do
+             self.include_root_in_json = true
+           end
+           RUBY
       end
     end
   end
