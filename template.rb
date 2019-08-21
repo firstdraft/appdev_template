@@ -79,6 +79,10 @@ gem_group :production do
   gem "rails_12factor"
 end
 
+gsub_file "Gemfile",
+  /#\sgem [',"]bcrypt[',"].*/,
+  "gem 'bcrypt'"
+
 gem "devise" unless skip_devise
 gem "activeadmin" unless skip_active_admin
 # gem "bootstrap-sass"
