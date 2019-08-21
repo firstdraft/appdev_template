@@ -241,6 +241,7 @@ after_bundle do
 
   file ".codio", render_file(".codio")
   file ".pryrc", render_file(".pryrc")
+  file "Procfile", render_file("Procfile")
 
   inside "config" do
     inside "initializers" do
