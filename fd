@@ -1,7 +1,12 @@
 --skip-action-cable
---skip-coffee
+--skip-javascript
 --skip-system-test
 --skip-test
 --skip-turbolinks
 --skip-yarn
+--skip-action-mailer
+--skip-action-mailbox
+--skip-action-text
+--skip-webpack-install
+
 --template=https://raw.githubusercontent.com/firstdraft/appdev_template/master/template.rb

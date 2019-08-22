@@ -3,8 +3,8 @@
 
 # TODO: Switch to pg from sqlite
 
-ENV = :prod
-# ENV = :dev
+# ENV = :prod
+ENV = :dev
 
 def path_to_file(filename)
   if ENV == :prod
@@ -34,8 +34,8 @@ def render_file(filename)
 end
 
 skip_active_admin = false
-# skip_devise = false
-skip_devise = yes?("Skip Devise?")
+skip_devise = false
+# skip_devise = yes?("Skip Devise?")
 
 # Remove default sqlite3 version
 # =================
@@ -44,15 +44,13 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 # Add standard gems
 # =================
 
-gem "hashdiff", [">= 1.0.0.beta1", "< 2.0.0"]
-
 gem_group :development, :test do
   gem "awesome_print"
   gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
   gem "dotenv-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "pry-rails"
-  gem "sqlite3", "~> 1.3.6"
+  gem "sqlite3", "~> 1.4.1"
   gem "table_print"
   gem "web_git"
 end
@@ -67,7 +65,6 @@ gem_group :development do
 end
 
 gem_group :test do
-  gem "capybara"
   gem "factory_bot_rails"
   gem "rspec-rails"
   gem "webmock"
@@ -81,7 +78,7 @@ end
 
 gsub_file "Gemfile",
   /#\sgem [',"]bcrypt[',"].*/,
-  "gem 'bcrypt'"
+  'gem "bcrypt"'
 
 gem "devise" unless skip_devise
 gem "activeadmin" unless skip_active_admin
@@ -164,6 +161,7 @@ after_bundle do
     inside "environments" do
       insert_into_file "development.rb", after: "Rails.application.configure do\n" do
         <<-RB.gsub(/^      /, "")
+          config.hosts.clear
           path = Rails.root.join("whitelist.yml")
           default_whitelist_path = Rails.root.join("default_whitelist.yml")
           whitelisted_ips = []
@@ -208,12 +206,6 @@ after_bundle do
             <!-- Expand the number of characters we can use in the document beyond basic ASCII 🎉 -->
             <meta charset="utf-8">
 
-            <!-- Connect Font Awesome CSS -->
-            <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css">
-
-            <!-- Connect Bootstrap CSS -->
-            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
-
             <!-- Connect Bootstrap JavaScript and its dependencies -->
             <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
             <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
@@ -231,14 +223,12 @@ after_bundle do
   # Remove require_tree .
 
   gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
-  gsub_file "app/assets/javascripts/application.js", "//= require_tree .\n", ""
 
   # Better backtraces
   file "config/initializers/active_record_relation_patch.rb", render_file("active_record_relation_patch.rb")
 
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
   file "config/initializers/delegation_monkey_patch.rb", render_file("delegation_monkey_patch.rb")
-
 
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
@@ -260,7 +250,7 @@ after_bundle do
   end
 
   initializer 'open_uri.rb', <<-CODE
-    require "open-uri"
+    require("open-uri")
 
   CODE
 
@@ -272,18 +262,13 @@ after_bundle do
 
       # Ignore dotenv files
       /.env*
-
       .rbenv-gemsets
-      examples.txt
       whitelist.yml
       grades.yml
-      cloud9_plugins.sh
-      appdev/
-      node_modules
-      package-lock.json
     EOF
   end
 
+  # Comment out sqlite 
   gsub_file ".gitignore",
   "/db/*.sqlite3\n/db/*.sqlite3-journal",
   "# /db/*.sqlite3\n# /db/*.sqlite3-journal"
