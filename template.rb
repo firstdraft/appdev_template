@@ -82,7 +82,7 @@ gsub_file "Gemfile",
   "gem 'bcrypt'"
 
 gem "devise" unless skip_devise
-gem "activeadmin" unless skip_active_admin
+gem "activeadmin", "2.2.0"
 # gem "bootstrap-sass"
 # gem "jquery-rails"
 # gem "font-awesome-sass", "~> 4.7.0"
