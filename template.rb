@@ -230,7 +230,7 @@ after_bundle do
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
 
-  file ".codio", render_file(".codio")
+  file ".gitpod.yml", render_file(".gitpod.yml")
   file ".pryrc", render_file(".pryrc")
   file "Procfile", render_file("Procfile")
 
