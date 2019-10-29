@@ -20,7 +20,7 @@ begin
   File.open(path, 'w') {|f| f.write whitelisted_ips.to_yaml }
 
   puts "Stopping Rails server. Please restart it."
-  `kill -9 $(lsof -i tcp:3000 -t) >/dev/null 2>/dev/null`
+  `fuser -k -n tcp 3000`
 rescue
   puts "That was not a valid IP address. Try copying the command again."
   puts "Be careful not to cut part of it off, or repeat part of it."
