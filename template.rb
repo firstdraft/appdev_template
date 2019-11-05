@@ -46,7 +46,7 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 
 gem_group :development, :test do
   gem "awesome_print"
-#   gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
+  # gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
   gem "dotenv-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "pry-rails"
@@ -177,6 +177,9 @@ after_bundle do
 
           config.web_console.permissions = whitelisted_ips
           config.web_console.whiny_requests = false
+
+          BetterErrors::Middleware.allow_ip! '10.138.0.0/16'
+
         RB
       end
     end
