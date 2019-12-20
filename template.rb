@@ -43,6 +43,7 @@ gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
 
 # Add standard gems
 # =================
+gem "rack-timeout", require: "rack/timeout/base"
 
 gem_group :development, :test do
   gem "awesome_print"
@@ -232,6 +233,8 @@ after_bundle do
 
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
+  remove_file "config/puma.rb"
+  file "config/puma.rb", render_file("puma.rb")
 
   file ".gitpod.yml", render_file(".gitpod.yml")
   file ".pryrc", render_file(".pryrc")
