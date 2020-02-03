@@ -94,6 +94,9 @@ gem "activeadmin", "2.2.0"
 #   /gem 'puma'/,
 #   "# gem 'puma'"
 
+# Remove tzinfo-data warning  
+`bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`
+
 after_bundle do
   # Overwrite bin/setup
 
