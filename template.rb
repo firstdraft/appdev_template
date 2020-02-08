@@ -57,7 +57,7 @@ gem_group :development, :test do
 end
 
 gem_group :development do
-  gem "annotate"
+  gem "annotate", "< 3.0.0"
   gem "better_errors"
   gem "binding_of_caller"
   gem "draft_generators", github: "firstdraft/draft_generators", branch: "summer-2019"
@@ -238,6 +238,7 @@ after_bundle do
   file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
   remove_file "config/puma.rb"
   file "config/puma.rb", render_file("puma.rb")
+  file "config/initializers/rack_timeout.rb", render_file("rack_timeout.rb")
 
   file ".gitpod.yml", render_file(".gitpod.yml")
   file ".pryrc", render_file(".pryrc")
