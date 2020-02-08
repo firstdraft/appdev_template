@@ -1,7 +1,8 @@
 --skip-action-cable
---skip-system-test
---skip-test
---skip-turbolinks
 --skip-action-mailbox
---skip-action-text
+--skip-action-mailer
+--skip-active-storage
+--skip-javascript
+--skip-test
+
 --template=https://raw.githubusercontent.com/firstdraft/appdev_template/master/template.rb
