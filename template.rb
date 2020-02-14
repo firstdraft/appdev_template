@@ -240,6 +240,7 @@ after_bundle do
   file "config/puma.rb", render_file("puma.rb")
 
   file ".gitpod.yml", render_file(".gitpod.yml")
+  file ".gitpod.Dockerfile", render_file(".gitpod.Dockerfile")
   file ".pryrc", render_file(".pryrc")
   file "Procfile", render_file("Procfile")
 

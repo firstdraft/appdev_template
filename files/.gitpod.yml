@@ -1,7 +1,8 @@
-image: jelaniwoods/appdev-ruby2_6_5
+image:
+  file: .gitpod.Dockerfile
 
 tasks:
-  - init: bin/setup
+  - init: yarn install --check-files && bin/setup
 ports:
   - port: 3000
     onOpen: open-preview
