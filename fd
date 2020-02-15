@@ -4,4 +4,8 @@
 --skip-turbolinks
 --skip-action-mailbox
 --skip-action-text
+--skip-action-mailer
+--skip-javascript
+--skip-webpack-install
+
 --template=https://raw.githubusercontent.com/firstdraft/appdev_template/master/template.rb

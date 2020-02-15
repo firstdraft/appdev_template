@@ -40,10 +40,16 @@ skip_devise = false
 # Remove default sqlite3 version
 # =================
 gsub_file "Gemfile", /^gem\s+["']sqlite3["'].*$/,''
+gsub_file "Gemfile", /^gem\s+["']sass-rails["'].*$/,""
 
 # Add standard gems
 # =================
 gem "rack-timeout", require: "rack/timeout/base"
+gem 'sprockets', '< 4'
+gem 'sassc-rails'
+# Javascript for Gitpod
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
 
 gem_group :development, :test do
   gem "awesome_print"
@@ -136,11 +142,11 @@ after_bundle do
       end
   end
 
-  # Configure mailer in development
+  # # Configure mailer in development
 
-  environment \
-    "config.action_mailer.default_url_options = { host: \"localhost\", port: 3000 }",
-    env: "development"
+  # environment \
+  #   "config.action_mailer.default_url_options = { host: \"localhost\", port: 3000 }",
+  #   env: "development"
 
   # Better default favicon
 
@@ -227,6 +233,7 @@ after_bundle do
   # Remove require_tree .
 
   gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
+  gsub_file "app/views/layouts/application.html.erb", "javascript_pack_tag", "javascript_include_tag"
 
   # Better backtraces
   file "config/initializers/active_record_relation_patch.rb", render_file("active_record_relation_patch.rb")
@@ -251,6 +258,35 @@ after_bundle do
           Rails.backtrace_cleaner.add_silencer { |line| line =~ /lib|gems/ }
 
         RUBY
+      end
+    end
+  end
+
+  inside "app" do
+    inside "assets" do
+      inside "config" do
+        append_file "manifest.js" do
+          <<-RUBY.gsub(/^          /, "")
+            //= link_directory ../javascripts .js
+
+          RUBY
+        end
+      end
+    end
+  end
+
+  create_file "app/assets/javascripts/application.js"
+  
+  inside "app" do
+    inside "assets" do
+      inside "javascripts" do
+        append_file "application.js" do
+          <<-RUBY.gsub(/^          /, "")
+          /*
+          *= require_self
+          */
+          RUBY
+        end
       end
     end
   end
