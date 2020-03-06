@@ -24,12 +24,20 @@ class JsonOutputFormatter < RSpec::Core::Formatters::JsonFormatter
       earned_points: earned_points,
       score: (earned_points.to_f / total_points).round(4)
     }
+    score = (@output_hash[:summary][:score] * 100).round(2)
+    
+    if score.nan?
+      score = "This project is not graded."
+    else
+      score = score.to_s + "%"
+    end
+    
     
     @output_hash[:summary_line] = [
-      "#{summary.example_count} tests",
+      "#{summary.example_count} #{summary.example_count == 1 ? "test" : "tests"}",
       "#{summary.failure_count} failures",
       "#{earned_points}/#{total_points} points",
-      "#{(@output_hash[:summary][:score] * 100).round(2)}%",
+      score,
     ].join(", ")
   end
 
