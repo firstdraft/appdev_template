@@ -411,6 +411,7 @@ after_bundle do
   prepend_file "spec/spec_helper.rb" do
     <<-'RUBY'.gsub(/^      /, "")
       require "factory_bot_rails"
+      require "rspec-html-matchers"
       require "#{File.expand_path('../support/json_output_formatter', __FILE__)}"
       require "#{File.expand_path('../support/hint_formatter', __FILE__)}"
     RUBY
@@ -424,6 +425,7 @@ after_bundle do
       after: "RSpec.configure do |config|\n" do
       <<-RUBY.gsub(/^      /, "")
         config.include FactoryBot::Syntax::Methods
+        config.include RSpecHtmlMatchers
         config.example_status_persistence_file_path = "examples.txt"
 
         def h(hint_identifiers)
