@@ -59,7 +59,7 @@ gem_group :development, :test do
   gem "pry-rails"
   gem "sqlite3", "~> 1.4.1"
   gem "table_print"
-  gem "web_git", github: "firstdraft/web_git"
+  gem "web_git", github: "firstdraft/web_git", branch: "spring2020"
 end
 
 gem_group :development do
@@ -382,8 +382,8 @@ after_bundle do
     end
   end
 
+  generate "web_git:install"
   # Install annotate
-
   generate "annotate:install"
 
   # Set up rspec and capybara
