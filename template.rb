@@ -142,6 +142,9 @@ after_bundle do
       end
   end
 
+  gsub_file "config/application.rb",
+    "# require \"action_mailer/railtie\"",
+    "require \"action_mailer/railtie\""
   # # Configure mailer in development
 
   # environment \
@@ -313,6 +316,7 @@ after_bundle do
       appdev/
       node_modules
       package-lock.json
+      core.chrome*
     EOF
   end
 
