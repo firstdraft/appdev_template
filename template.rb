@@ -76,7 +76,8 @@ gem_group :test do
   gem "factory_bot_rails"
   gem "rspec-rails"
   gem "webmock"
-  gem 'rspec-html-matchers'
+  gem "rspec-html-matchers"
+  gem "selenium-webdriver"
 end
 
 gem_group :production do
@@ -404,6 +405,31 @@ after_bundle do
       <<-RUBY.gsub(/^        /, "")
         require "capybara/rails"
         require "capybara/rspec"
+      RUBY
+    end
+  end
+
+  inside "spec" do
+    insert_into_file "rails_helper.rb",
+      after: "config.use_transactional_fixtures = true\n" do
+      <<-RUBY.gsub(/^        /, "")
+          Capybara.register_driver :chrome do |app|
+            Capybara::Selenium::Driver.new(app, browser: :chrome)
+          end
+          
+          Capybara.register_driver :headless_chrome do |app|
+            capabilities = Selenium::WebDriver::Remote::Capabilities.chrome(
+            chromeOptions: { args: %w(headless disable-gpu no-sandbox disable-dev-shm-usage) }
+          )
+          
+          Capybara::Selenium::Driver.new app,
+            browser: :chrome,
+            desired_capabilities: capabilities
+          end
+          
+          Capybara.default_max_wait_time = 3
+
+          Capybara.javascript_driver = :headless_chrome
       RUBY
     end
   end
