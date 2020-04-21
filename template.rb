@@ -52,7 +52,7 @@ gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 
 gem_group :development, :test do
-  gem "awesome_print"
+  gem "amazing_print"
   # gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
   gem "dotenv-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
