@@ -489,6 +489,13 @@ after_bundle do
 
   file "default_whitelist.yml",
     render_file("default_whitelist.yml")
+  
+  # Add Dockerfile
+  file "Dockerfile", render_file("Dockerfile")
+
+  ruby_version = open(".ruby-version").read
+  ruby_version = ruby_version.gsub("ruby-", "").strip
+  gsub_file("Dockerfile", "2.6.5", ruby_version)
 
   rails_command "db:migrate"
 
