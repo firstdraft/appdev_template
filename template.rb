@@ -318,6 +318,7 @@ after_bundle do
       node_modules
       package-lock.json
       core.chrome*
+      !vendor/
     EOF
   end
 
