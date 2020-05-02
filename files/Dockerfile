@@ -7,7 +7,7 @@ RUN sudo apt-get update
 RUN sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4
 RUN sudo apt-get install default-jdk -y
 
-COPY .irbrc ~/.irbrc
+# COPY .irbrc ~/.irbrc
 WORKDIR /base-rails
 
 RUN sudo curl -sS -o - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
@@ -42,3 +42,7 @@ RUN /bin/bash -l -c "rvm use --default 2.6.5"
 RUN /bin/bash -l -c "gem install bundler"
 RUN /bin/bash -l -c "bundle install"
 RUN /bin/bash -l -c "gem uninstall -i /home/gitpod/.rvm/rubies/ruby-2.6.5/lib/ruby/gems/2.6.0 minitest"
+
+RUN echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+RUN echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+RUN echo 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.bashrc
