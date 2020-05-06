@@ -82,7 +82,6 @@ end
 
 gem_group :production do
   gem "pg"
-  gem "rails_12factor"
 end
 
 gsub_file "Gemfile",
