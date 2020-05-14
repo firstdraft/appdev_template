@@ -64,7 +64,7 @@ end
 
 gem_group :development do
   gem "annotate"
-  gem "better_errors"
+  gem "better_errors", "2.6"
   gem "binding_of_caller"
   gem "draft_generators", github: "firstdraft/draft_generators", branch: "winter-2020"
   gem "letter_opener"
