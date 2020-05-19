@@ -33,8 +33,8 @@ def render_file(filename)
   end
 end
 
-skip_active_admin = false
-skip_devise = false
+skip_active_admin = true
+skip_devise = true
 # skip_devise = yes?("Skip Devise?")
 
 # Remove default sqlite3 version
@@ -69,6 +69,7 @@ gem_group :development do
   gem "draft_generators", github: "firstdraft/draft_generators", branch: "winter-2020"
   gem "letter_opener"
   gem "meta_request"
+  gem "rails_db", "2.3.1"
 end
 
 gem_group :test do
@@ -89,7 +90,7 @@ gsub_file "Gemfile",
   "gem 'bcrypt'"
 
 gem "devise" unless skip_devise
-gem "activeadmin", "2.2.0"
+# gem "activeadmin", "2.2.0"
 # gem "bootstrap-sass"
 # gem "jquery-rails"
 # gem "font-awesome-sass", "~> 4.7.0"
