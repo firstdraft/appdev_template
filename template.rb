@@ -382,6 +382,7 @@ after_bundle do
            RUBY
       end
     end
+    run "mv app/models/admin_user.rb vendor/app/models"
   end
 
   generate "web_git:install"
@@ -392,7 +393,6 @@ after_bundle do
 
   generate "rspec:install"
 
-  run "mv app/models/admin_user.rb vendor/app/models"
 
   remove_file ".rspec"
   file ".rspec", render_file(".rspec")
