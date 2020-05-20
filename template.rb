@@ -233,20 +233,24 @@ after_bundle do
   end
 
   empty_directory File.join("app", "views", "application")
-
+  
+  empty_directory File.join("config", "initializers", "active_record")
+  empty_directory File.join("config", "initializers", "active_record", "relation")
+  
   # Remove require_tree .
 
   gsub_file "app/assets/stylesheets/application.css", " *= require_tree .\n", ""
   gsub_file "app/views/layouts/application.html.erb", "javascript_pack_tag", "javascript_include_tag"
 
   # Better backtraces
-  file "config/initializers/active_record_relation_patch.rb", render_file("active_record_relation_patch.rb")
-
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
-  file "config/initializers/delegation_monkey_patch.rb", render_file("delegation_monkey_patch.rb")
+  
+  file "config/initializers/active_record/relation/delegation_patch.rb", render_file("delegation_patch.rb")
+  file "config/initializers/active_record/relation/calculations_patch.rb", render_file("calculations_patch.rb")
+  file "config/initializers/active_record/attribute_methods_patch.rb", render_file("attribute_methods_patch.rb")
+  file "config/initializers/active_record/relation_patch.rb", render_file("relation_patch.rb")
 
   file "config/initializers/fetch_store_patch.rb", render_file("fetch_store_patch.rb")
-  file "config/initializers/attribute-methods-patch.rb", render_file("attribute-methods-patch.rb")
   remove_file "config/puma.rb"
   file "config/puma.rb", render_file("puma.rb")
 
