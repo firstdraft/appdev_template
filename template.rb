@@ -244,6 +244,7 @@ after_bundle do
 
   # Better backtraces
   file "config/initializers/nicer_errors.rb", render_file("nicer_errors.rb")
+  file "config/initializers/rails_db.rb", render_file("rails_db.rb")
   
   file "config/initializers/active_record/relation/delegation_patch.rb", render_file("delegation_patch.rb")
   file "config/initializers/active_record/relation/calculations_patch.rb", render_file("calculations_patch.rb")
