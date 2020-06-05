@@ -4,6 +4,9 @@
   "emmet.includeLanguages": {
     "erb": "html"
   },
+  "files.associations": {
+    "*.erb": "erb"
+  },
   "solargraph.checkGemVersion": false,
   "solargraph.hover": false,
   "solargraph.diagnostics": false,
