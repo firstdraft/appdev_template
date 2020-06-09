@@ -257,6 +257,7 @@ after_bundle do
 
   file ".gitpod.yml", render_file(".gitpod.yml")
   file ".pryrc", render_file(".pryrc")
+  file ".gitattributes", render_file(".gitattributes")
   file "Procfile", render_file("Procfile")
 
   inside "config" do
