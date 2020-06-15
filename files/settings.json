@@ -6,11 +6,5 @@
   },
   "files.associations": {
     "*.erb": "erb"
-  },
-  "solargraph.checkGemVersion": false,
-  "solargraph.hover": false,
-  "solargraph.diagnostics": false,
-  "solargraph.completion": false,
-  "solargraph.autoformat": false,
-  "solargraph.formatting": false
+  }
 }
