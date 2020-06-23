@@ -67,8 +67,8 @@ gem_group :development do
   gem "better_errors", "2.6"
   gem "binding_of_caller"
   gem "draft_generators", github: "firstdraft/draft_generators", branch: "winter-2020"
-  gem "letter_opener"
-  gem "meta_request"
+  # gem "letter_opener"
+  # gem "meta_request"
   gem "rails_db", "2.3.1"
 end
 
@@ -97,9 +97,12 @@ gem "devise" unless skip_devise
 
 # Use WEBrick
 
-# gsub_file "Gemfile",
-#   /gem 'puma'/,
-#   "# gem 'puma'"
+gsub_file "Gemfile",
+  /gem 'jbuilder'.*$/,
+  ""
+gsub_file "Gemfile",
+  "# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder",
+  ""
 
 # Remove tzinfo-data warning  
 `bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`
@@ -134,9 +137,7 @@ after_bundle do
             g.javascripts     false
             g.helper          false
           end
-          # Load AdminUser model
-          config.autoload_paths += %W(\#{config.root}/vendor/app/models)
-
+          
           config.action_controller.default_protect_from_forgery = false
           config.active_record.belongs_to_required_by_default = false
           RUBY
@@ -144,9 +145,8 @@ after_bundle do
   end
 
   gsub_file "config/application.rb",
-    "# require \"action_mailer/railtie\"",
-    "require \"action_mailer/railtie\""
-  # # Configure mailer in development
+          /require "active_job\/railtie"$/,
+          "# require \"active_job\/railtie\""
 
   # environment \
   #   "config.action_mailer.default_url_options = { host: \"localhost\", port: 3000 }",
@@ -232,7 +232,7 @@ after_bundle do
     end
   end
 
-  empty_directory File.join("app", "views", "application")
+  # empty_directory File.join("app", "views", "application")
   
   empty_directory File.join("config", "initializers", "active_record")
   empty_directory File.join("config", "initializers", "active_record", "relation")
@@ -276,7 +276,7 @@ after_bundle do
       inside "config" do
         append_file "manifest.js" do
           <<-RUBY.gsub(/^          /, "")
-            //= link_directory ../javascripts .js
+          //= link_directory ../javascripts .js
 
           RUBY
         end
@@ -443,6 +443,7 @@ after_bundle do
   # Remove concerns folders
   remove_dir "app/controllers/concerns"
   remove_dir "app/models/concerns"
+  remove_dir "app/jobs"
 
   prepend_file "spec/spec_helper.rb" do
     <<-'RUBY'.gsub(/^      /, "")
