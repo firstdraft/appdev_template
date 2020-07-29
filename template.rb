@@ -104,8 +104,9 @@ gsub_file "Gemfile",
   "# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder",
   ""
 
-# Remove tzinfo-data warning  
-`bundle lock --add-platform x86-mingw32 x86-mswin32 x64-mingw32 java`
+gsub_file "Gemfile",
+    /gem 'tzinfo-data'.*$/,
+    ""
 
 after_bundle do
   # Overwrite bin/setup
