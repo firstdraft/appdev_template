@@ -357,6 +357,8 @@ after_bundle do
 
     empty_directory ".theia"
     file ".theia/settings.json", render_file("settings.json")
+    file ".theia/tasks.json", render_file("tasks.json")
+    file ".theia/keymaps.json", render_file("keymaps.json")
 
     inside "config" do
       inside "initializers" do

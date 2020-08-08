@@ -1,0 +1,6 @@
+[
+  {
+      "command": "task:run",
+      "keybinding": "shift+alt+r"
+  }
+]
