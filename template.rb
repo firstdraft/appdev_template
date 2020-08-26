@@ -355,9 +355,6 @@ after_bundle do
     empty_directory "vendor/app"
     empty_directory "vendor/app/models"
 
-    empty_directory ".theia"
-    file ".theia/settings.json", render_file("settings.json")
-
     inside "config" do
       inside "initializers" do
         insert_into_file "active_admin.rb",
@@ -390,6 +387,9 @@ after_bundle do
     end
     run "mv app/models/admin_user.rb vendor/app/models"
   end
+  
+  empty_directory ".theia"
+  file ".theia/settings.json", render_file("settings.json")
 
   generate "web_git:install"
   # Install annotate
