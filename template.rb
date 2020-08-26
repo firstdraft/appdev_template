@@ -53,7 +53,6 @@ gem 'therubyracer', :platforms => :ruby
 
 gem_group :development, :test do
   gem "amazing_print"
-  # gem "console_ip_whitelist", github: "firstdraft/console_ip_whitelist"
   gem "dotenv-rails"
   gem "grade_runner", github: "firstdraft/grade_runner"
   gem "pry-rails"
@@ -178,19 +177,6 @@ after_bundle do
       insert_into_file "development.rb", after: "Rails.application.configure do\n" do
         <<-RB.gsub(/^      /, "")
           config.hosts.clear
-          path = Rails.root.join("whitelist.yml")
-          default_whitelist_path = Rails.root.join("default_whitelist.yml")
-          whitelisted_ips = []
-
-          if File.exist?(path)
-            whitelisted_ips = YAML.load_file(path)
-          end
-
-          if File.exist?(default_whitelist_path)
-            whitelisted_ips = whitelisted_ips.concat(YAML.load_file(default_whitelist_path))
-          end
-
-          config.web_console.permissions = whitelisted_ips
           config.web_console.whiny_requests = false
 
           BetterErrors::Middleware.allow_ip! '10.138.0.0/16'
@@ -493,11 +479,6 @@ after_bundle do
   file "bin/whitelist",
     render_file("whitelist")
 
-  # Add whitelist yml
-
-  file "default_whitelist.yml",
-    render_file("default_whitelist.yml")
-  
   # Add Dockerfile
   file "Dockerfile", render_file("Dockerfile")
 
