@@ -311,6 +311,7 @@ after_bundle do
       package-lock.json
       core.chrome*
       !vendor/
+      .theia/.ltici_apitoken.yml
     EOF
   end
 
@@ -390,7 +391,7 @@ after_bundle do
   file ".rspec", render_file(".rspec")
 
   empty_directory File.join("spec", "features")
-  file "spec/features/dummy_spec.rb", render_file("dummy_spec.rb")
+  file "spec/features/sample_spec.rb", render_file("sample_spec.rb")
 
   inside "spec" do
     insert_into_file "rails_helper.rb",
@@ -471,13 +472,13 @@ after_bundle do
 
   remove_file ".firstdraft_project.yml"
 
-  file "grades.yml",
-    render_file("grades.yml")
+  # file "grades.yml",
+  #   render_file("grades.yml")
 
   # Add bin executable whitelist
 
-  file "bin/whitelist",
-    render_file("whitelist")
+  # file "bin/whitelist",
+  #   render_file("whitelist")
 
   # Add Dockerfile
   file "Dockerfile", render_file("Dockerfile")
@@ -490,7 +491,7 @@ after_bundle do
 
   run "chmod 775 bin/server"
   run "chmod 775 bin/setup"
-  run "chmod 775 bin/whitelist"
+  # run "chmod 775 bin/whitelist"
 
   git :init
   git add: "-A"
