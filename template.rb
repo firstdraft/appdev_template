@@ -181,6 +181,9 @@ after_bundle do
 
           BetterErrors::Middleware.allow_ip! '10.138.0.0/16'
 
+          console do
+            ActiveRecord::Base.connection
+          end
         RB
       end
     end
