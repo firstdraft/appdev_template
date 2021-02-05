@@ -32,6 +32,7 @@ class JsonOutputFormatter < RSpec::Core::Formatters::JsonFormatter
     
     if summary.errors_outside_of_examples_count.positive?
       result = "An error occurred while running tests"
+      result += @output_hash[:messages].first
     else
       result = result.to_s + "%"
     end
